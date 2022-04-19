@@ -14,6 +14,11 @@ import java.util.Arrays;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
 
 public class GameWindow {
 
@@ -21,6 +26,8 @@ public class GameWindow {
 	private JPanel panel;
 	private JTextPane txtStory;
 	private JButton btnContinue;
+	
+	private Shop swindow = new Shop();
 
 	/**
 	 * Launch the application.
@@ -50,6 +57,8 @@ public class GameWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		
+		
 		frame.setBounds(100, 100, 624, 428);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -97,12 +106,24 @@ public class GameWindow {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
-							Shop swindow = new Shop();
+							swindow.setVisible();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				});
+			}
+		});
+		
+		JLabel lblNewLabel2 = new JLabel("PIZZA TIME");
+		lblNewLabel2.setFont(new Font("Monotype Corsiva", Font.PLAIN, 50));
+		lblNewLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel2.setBounds(41, 68, 494, 145);
+		
+		swindow.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				panel.add(lblNewLabel2);
 			}
 		});
 	}
