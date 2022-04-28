@@ -9,12 +9,14 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
 
 import World.Supplies;
 
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -84,17 +86,6 @@ public class MainWindow {
 		initialize();
 	}
 	
-	public void setTotal() {
-		int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
-				+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
-				+ (Integer.parseInt(txtAmmo.getText().replaceAll(" ", ""))  * ammoCost * rate)
-				+ (Integer.parseInt(txtOxen.getText().replaceAll(" ", ""))  * oxenCost * rate)
-				+ ((Integer.parseInt(txtWheel.getText().replaceAll(" ", ""))  * wheelCost * rate))
-				+ ((Integer.parseInt(txtAxle.getText().replaceAll(" ", ""))  * axleCost * rate))
-				+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
-				+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
-		moneyTotal.setText("$" + total);
-	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -202,14 +193,14 @@ public class MainWindow {
 		btnBuy.setBounds(553, 290, 89, 58);
 		shopScreen.add(btnBuy);
 		
-		MaskFormatter mask = null;
-        try {
-            mask = new MaskFormatter("##");
-            mask.setPlaceholderCharacter(' ');
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-		
+		NumberFormat format = NumberFormat.getInstance();
+	    NumberFormatter mask = new NumberFormatter(format);
+	    mask.setValueClass(Integer.class);
+	    mask.setMinimum(0);
+	    mask.setMaximum(999);
+	    mask.setAllowsInvalid(false);
+	    mask.setCommitsOnValidEdit(true);
+	    
 		txtFood = new JFormattedTextField(mask);
 		txtFood.setText("0");
 		txtFood.addFocusListener(new FocusAdapter() {
@@ -416,5 +407,16 @@ public class MainWindow {
 		infoMedBox.setBounds(351, 253, 139, 20);
 		shopScreen.add(infoMedBox);
 	}
-
+	
+	public void setTotal() {
+		int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
+				+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
+				+ (Integer.parseInt(txtAmmo.getText().replaceAll(" ", ""))  * ammoCost * rate)
+				+ (Integer.parseInt(txtOxen.getText().replaceAll(" ", ""))  * oxenCost * rate)
+				+ ((Integer.parseInt(txtWheel.getText().replaceAll(" ", ""))  * wheelCost * rate))
+				+ ((Integer.parseInt(txtAxle.getText().replaceAll(" ", ""))  * axleCost * rate))
+				+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
+				+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
+		moneyTotal.setText("$" + total);
+	}
 }
