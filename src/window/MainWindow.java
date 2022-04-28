@@ -174,6 +174,7 @@ public class MainWindow {
 			public void actionPerformed(ActionEvent e) {
 				card.show(frame.getContentPane(), "shop");
 				moneyLeft.setText("$" + supply.getMoney());
+				setDollarAmount();
 			}
 		});
 		btnContinue.setBounds(259, 327, 106, 23);
@@ -418,5 +419,16 @@ public class MainWindow {
 				+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
 				+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
 		moneyTotal.setText("$" + total);
+	}
+	
+	public void setDollarAmount () {
+		moneyFood.setText("X $" + (foodCost * rate));
+		moneyClothing.setText("X $" + (clothingCost * rate));
+		moneyAmmo.setText("X $" + (ammoCost * rate));
+		moneyOxen.setText("X $" + (oxenCost * rate));
+		moneyWheel.setText("X $" + (wheelCost * rate));
+		moneyAxle.setText("X $" + (axleCost * rate));
+		moneyTongue.setText("X $" + (tongueCost * rate));
+		moneyMedBox.setText("X $" + (medCost * rate));
 	}
 }
