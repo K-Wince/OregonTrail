@@ -63,6 +63,7 @@ public class MainWindow {
 	private int axleCost = 10;
 	private int tongueCost = 10;
 	private int medCost = 25;
+	private JPanel wagonShopScreen;
 	/**
 	 * Launch the application.
 	 */
@@ -407,6 +408,20 @@ public class MainWindow {
 		infoMedBox.setHorizontalAlignment(SwingConstants.RIGHT);
 		infoMedBox.setBounds(351, 253, 139, 20);
 		shopScreen.add(infoMedBox);
+		
+		wagonShopScreen = new JPanel();
+		frame.getContentPane().add(wagonShopScreen, "name_802408356595100");
+		wagonShopScreen.setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(245, 264, 89, 23);
+		wagonShopScreen.add(btnNewButton);
+		
+		JLabel lblWagonShop = new JLabel("Hiram Young's Wagon Shop");
+		lblWagonShop.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWagonShop.setFont(new Font("SWItalt", Font.PLAIN, 26));
+		lblWagonShop.setBounds(10, 11, 637, 49);
+		wagonShopScreen.add(lblWagonShop);
 	}
 	
 	public void setTotal() {
