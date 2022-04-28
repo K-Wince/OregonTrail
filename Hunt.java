@@ -21,6 +21,7 @@ public class Hunt extends OregonTrailMain{
 	private String results;
 	private int rabbits;
 	private int ducks;
+	private int bullets = 2;
 	private int random1;
 	private int random2;
 	private int random3;
@@ -28,7 +29,7 @@ public class Hunt extends OregonTrailMain{
 	private JTextField digitTextField;
 	private ImageIcon[] digitIcon;
 	private int counter = 0;
-	private String[] digitString = {"TEN", "NINE", "EIGHT", "SEVEN", "SIX", "FIVE", "FOUR", "THREE", "TWO", "ONE", "ZERO", "monkaS"};
+	private String[] digitString = {"TEN", "NINE", "EIGHT", "SEVEN", "SIX", "FIVE", "FOUR", "THREE", "TWO", "ONE", "ZERO", "FIFTEEN", "FOURTEEN", "THIRTEEN", "TWELVE", "ELEVEN"};
 	private Timer timer;
 	private JLabel digitLabel;
 	private ActionListener closeHunt;
@@ -40,14 +41,19 @@ public class Hunt extends OregonTrailMain{
 	
 	public Hunt(){
 		
+		if (bullets <=0){
+			frmOregonTrail.dispose();
+		}
+		
 		initialize();
-	
 		timer = new Timer(countdown, closeHunt);
 		
 		timer.start();
 		frmOregonTrail.setVisible(true);
 		System.out.println(rabbits + ducks);
-	
+		
+		
+		
 		timer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(counter >= 10) {
@@ -117,8 +123,11 @@ public class Hunt extends OregonTrailMain{
 	
 	buttonDuck.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			ducks = ducks+1;
-			food = food+10;
+			ducks++;
+			bullets--;
+			if (bullets <=0){
+				frmOregonTrail.dispose();
+			}
 			random1 = rndGenerator.nextInt(350);
 			random2 = rndGenerator.nextInt(80);
 			buttonDuck.setBounds(random1, random2, 85, 21);
@@ -129,8 +138,11 @@ public class Hunt extends OregonTrailMain{
 	
 	buttonRabbit.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			rabbits = rabbits+1;
-			food = food+10;
+			rabbits++;
+			bullets--;
+			if (bullets <=0){
+				frmOregonTrail.dispose();
+			}
 			random1 = rndGenerator.nextInt(350);
 			random2 = rndGenerator.nextInt(80);
 			buttonRabbit.setBounds(random1, random2+170, 85, 21);
@@ -139,11 +151,6 @@ public class Hunt extends OregonTrailMain{
 		}
 	});
 	
-	/*public void clockActionPerformed(ActionEvent evt) {
-		   counter = (counter + 1) % 10;
-			   digitLabel.setIcon(digitIcon[counter]);
-			   digitTextField.setText(digitString[counter]);
-			  }*/
 	
 	}
 }
