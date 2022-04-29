@@ -92,7 +92,7 @@ public class Supplies {
 		}
 	}
 	
-	public boolean cosumeAmmo() {
+	public boolean consumeAmmo() {
 		if (ammo != 0) {
 			ammo--;
 			return true;
