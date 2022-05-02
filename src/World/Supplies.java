@@ -57,7 +57,7 @@ public class Supplies {
 	// Consume Supplies
 	
 	public boolean spendMoney(int n) {
-		if (n > money && money != 0) {
+		if (n < money && money != 0) {
 			money -= n;
 			return true;
 		} else {
@@ -66,7 +66,7 @@ public class Supplies {
 	}
 	
 	public boolean eatFood(int n) {
-		if (n > food && food != 0) {
+		if (n < food && food != 0) {
 			food -= n;
 			return true;
 		} else {
@@ -75,7 +75,7 @@ public class Supplies {
 	}
 	
 	public boolean loseClothing(int n) {
-		if (n > clothing && clothing != 0) {
+		if (n < clothing && clothing != 0) {
 			clothing -= n;
 			return true;
 		} else {

@@ -28,6 +28,11 @@ import java.awt.event.FocusEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JTextPane;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class MainWindow {
 	// GUI Variables
@@ -58,6 +63,21 @@ public class MainWindow {
 
 	// Game Variables
 	private Supplies supply = new Supplies();
+	private int day = 1;
+	private int milesLeft = 102;
+	private int people = 5;
+	private int pace = 10;
+	private int portion = 10;
+	private String[] landMarks = {
+			"Independence, Missouri", 
+			"Kansas River Crossing",
+			"Big Blue River Crossing",
+			"Fort Kearney"
+	};
+	private Integer[] distance = {102, 83, 118, -99};
+	private int location = 0;
+	private Image wagonImage = null;
+	
 	
 	// Cost of Items
 	private int rate = 1;
@@ -70,6 +90,9 @@ public class MainWindow {
 	private int tongueCost = 10;
 	private int medCost = 25;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
+	private JTextArea mainText;
 	
 	/**
 	 * Launch the application.
@@ -195,11 +218,6 @@ public class MainWindow {
 		lblShop.setBounds(10, 11, 368, 58);
 		shopScreen.add(lblShop);
 		
-		JButton btnBuy = new JButton("Buy");
-		btnBuy.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnBuy.setBounds(553, 290, 89, 58);
-		shopScreen.add(btnBuy);
-		
 		NumberFormat format = NumberFormat.getInstance();
 	    NumberFormatter mask = new NumberFormatter(format);
 	    mask.setValueClass(Integer.class);
@@ -213,7 +231,7 @@ public class MainWindow {
 		txtFood.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtFood.setHorizontalAlignment(SwingConstants.CENTER);
@@ -225,7 +243,7 @@ public class MainWindow {
 		txtClothing.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtClothing.setHorizontalAlignment(SwingConstants.CENTER);
@@ -237,7 +255,7 @@ public class MainWindow {
 		txtAmmo.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtAmmo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -249,7 +267,7 @@ public class MainWindow {
 		txtOxen.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtOxen.setHorizontalAlignment(SwingConstants.CENTER);
@@ -261,7 +279,7 @@ public class MainWindow {
 		txtWheel.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtWheel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -273,7 +291,7 @@ public class MainWindow {
 		txtAxle.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtAxle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -285,7 +303,7 @@ public class MainWindow {
 		txtTongue.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtTongue.setHorizontalAlignment(SwingConstants.CENTER);
@@ -297,7 +315,7 @@ public class MainWindow {
 		txtMedBox.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				setTotal();
+				getTotal();
 			}
 		});
 		txtMedBox.setHorizontalAlignment(SwingConstants.CENTER);
@@ -414,6 +432,41 @@ public class MainWindow {
 		infoMedBox.setBounds(351, 253, 139, 20);
 		shopScreen.add(infoMedBox);
 		
+		JLabel infoNotEnoughFunds = new JLabel("");
+		infoNotEnoughFunds.setForeground(Color.RED);
+		infoNotEnoughFunds.setHorizontalAlignment(SwingConstants.CENTER);
+		infoNotEnoughFunds.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		infoNotEnoughFunds.setBounds(261, 333, 282, 34);
+		shopScreen.add(infoNotEnoughFunds);
+		
+		JButton btnBuy = new JButton("Buy");
+		btnBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Try to spend the money if it isn't able to then issue a warning
+				if(!supply.spendMoney(getTotal())) {
+					infoNotEnoughFunds.setText("Insufficient Funds to Purchase Items");
+				} else {
+					// Remove the warning
+					infoNotEnoughFunds.setText(null);
+					// Add the supplies
+					supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")));
+					supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")));
+					supply.addClothing(Integer.parseInt(txtClothing.getText().replaceAll(" ", "")));
+					supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")));
+					supply.addWheel(Integer.parseInt(txtWheel.getText().replaceAll(" ", "")));
+					supply.addAxle(Integer.parseInt(txtAxle.getText().replaceAll(" ", "")));
+					supply.addTongue(Integer.parseInt(txtTongue.getText().replaceAll(" ", "")));
+					supply.addMedBox(Integer.parseInt(txtMedBox.getText().replaceAll(" ", "")));
+					// Go to the main screen
+					card.show(frame.getContentPane(), "mainScreen");
+				}
+			}
+		});
+		
+		btnBuy.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnBuy.setBounds(553, 290, 89, 58);
+		shopScreen.add(btnBuy);
+		
 		wagonShopScreen = new JPanel();
 		frame.getContentPane().add(wagonShopScreen, "wagonShop");
 		wagonShopScreen.setLayout(null);
@@ -483,19 +536,8 @@ public class MainWindow {
 		infoFancyCar.setBounds(435, 225, 185, 23);
 		wagonShopScreen.add(infoFancyCar);
 		
-		JButton btnWagonBuy = new JButton("Buy");
-		btnWagonBuy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				card.show(frame.getContentPane(), "mainScreen");
-				moneyLeft.setText("$" + supply.getMoney());
-				setDollarAmount();
-			}
-		});
-		btnWagonBuy.setBounds(276, 311, 89, 23);
-		wagonShopScreen.add(btnWagonBuy);
-		
 		JRadioButton btnCovWag = new JRadioButton("");
+		btnCovWag.setSelected(true);
 		buttonGroup.add(btnCovWag);
 		btnCovWag.setBounds(100, 255, 36, 23);
 		wagonShopScreen.add(btnCovWag);
@@ -510,6 +552,29 @@ public class MainWindow {
 		btnFancyCar.setBounds(515, 255, 36, 23);
 		wagonShopScreen.add(btnFancyCar);
 		
+		
+		JButton btnWagonBuy = new JButton("Buy");
+		btnWagonBuy.setBounds(276, 311, 89, 23);
+		wagonShopScreen.add(btnWagonBuy);
+		btnWagonBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(btnCovWag.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(100);
+				} else if(btnRadioFlyer.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(200);
+				} else if(btnFancyCar.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(400);
+				} 
+				
+				moneyLeft.setText("$" + supply.getMoney());
+				setDollarAmount();
+				card.show(frame.getContentPane(), "shop");
+			}
+		});
+		
 		JLabel lblMoneyInfo = new JLabel("Money Left: $1200");
 		lblMoneyInfo.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblMoneyInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -522,12 +587,117 @@ public class MainWindow {
 		
 		JLabel lblGround = new JLabel("");
 		Image prairieImg = new ImageIcon(MainWindow.class.getResource("/pictures/prairie.jpg")).getImage().getScaledInstance(657, 150, Image.SCALE_SMOOTH);
+		
+		JLabel lblWagon = new JLabel("");
+		lblWagon.setBounds(592, 29, 65, 55);
+		mainScreen.add(lblWagon);
+		
+		JLabel lblPath = new JLabel("X   -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -");
+		lblPath.setForeground(Color.WHITE);
+		lblPath.setBounds(10, 44, 637, 29);
+		mainScreen.add(lblPath);
 		lblGround.setIcon(new ImageIcon(prairieImg));
 		lblGround.setBounds(0, 0, 657, 84);
 		mainScreen.add(lblGround);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 84, 400, 254);
+		mainScreen.add(scrollPane);
+		
+		mainText = new JTextArea();
+		mainText.setWrapStyleWord(true);
+		mainText.setLineWrap(true);
+		mainText.setBackground(Color.WHITE);
+		scrollPane.setViewportView(mainText);
+		mainText.setEditable(false);
+		
+		JButton btnNext = new JButton("Next Day");
+		btnNext.setBounds(162, 344, 89, 23);
+		mainScreen.add(btnNext);
+		
+		JButton btnShop = new JButton("Shop");
+		btnShop.setEnabled(false);
+		btnShop.setBounds(438, 320, 89, 23);
+		mainScreen.add(btnShop);
+		
+		JButton btnHunt = new JButton("Hunt");
+		btnHunt.setBounds(533, 320, 89, 23);
+		mainScreen.add(btnHunt);
+		
+		JButton btnDiary = new JButton("Diary");
+		btnDiary.setBounds(438, 344, 89, 23);
+		mainScreen.add(btnDiary);
+		
+		JButton btnSupplies = new JButton("Supplies");
+		btnSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printSupplies();
+			}
+		});
+		btnSupplies.setBounds(533, 344, 89, 23);
+		mainScreen.add(btnSupplies);
+		
+		JLabel statMiles = new JLabel("Miles Left:");
+		statMiles.setHorizontalAlignment(SwingConstants.TRAILING);
+		statMiles.setBounds(438, 95, 89, 14);
+		mainScreen.add(statMiles);
+		
+		JLabel statFood = new JLabel("Pounds of Food:");
+		statFood.setHorizontalAlignment(SwingConstants.TRAILING);
+		statFood.setBounds(420, 120, 107, 14);
+		mainScreen.add(statFood);
+		
+		JLabel statHealth = new JLabel("Health:");
+		statHealth.setHorizontalAlignment(SwingConstants.TRAILING);
+		statHealth.setBounds(438, 145, 89, 14);
+		mainScreen.add(statHealth);
+		
+		JLabel statPace = new JLabel("Pace:");
+		statPace.setHorizontalAlignment(SwingConstants.CENTER);
+		statPace.setBounds(438, 197, 89, 14);
+		mainScreen.add(statPace);
+		
+		JLabel statPortion = new JLabel("Portions:");
+		statPortion.setHorizontalAlignment(SwingConstants.CENTER);
+		statPortion.setBounds(533, 197, 89, 14);
+		mainScreen.add(statPortion);
+		
+		JRadioButton rdbtnSlow = new JRadioButton("Slow");
+		buttonGroup_1.add(rdbtnSlow);
+		rdbtnSlow.setBounds(448, 218, 79, 23);
+		mainScreen.add(rdbtnSlow);
+		
+		JRadioButton rdbtnSteady = new JRadioButton("Steady");
+		rdbtnSteady.setSelected(true);
+		buttonGroup_1.add(rdbtnSteady);
+		rdbtnSteady.setBounds(448, 244, 79, 23);
+		mainScreen.add(rdbtnSteady);
+		
+		JRadioButton rdbtnGruelling = new JRadioButton("Gruelling");
+		buttonGroup_1.add(rdbtnGruelling);
+		rdbtnGruelling.setBounds(448, 273, 79, 23);
+		mainScreen.add(rdbtnGruelling);
+		
+		JRadioButton rdbtnSkim = new JRadioButton("Skim");
+		buttonGroup_2.add(rdbtnSkim);
+		rdbtnSkim.setBounds(543, 218, 79, 23);
+		mainScreen.add(rdbtnSkim);
+		
+		JRadioButton rdbtnNormal = new JRadioButton("Normal");
+		rdbtnNormal.setSelected(true);
+		buttonGroup_2.add(rdbtnNormal);
+		rdbtnNormal.setBounds(543, 244, 79, 23);
+		mainScreen.add(rdbtnNormal);
+		
+		JRadioButton rdbtnFilling = new JRadioButton("Filling");
+		buttonGroup_2.add(rdbtnFilling);
+		rdbtnFilling.setBounds(543, 273, 79, 23);
+		mainScreen.add(rdbtnFilling);
 	}
 	
-	public void setTotal() {
+	public int getTotal() {
 		int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
 				+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
 				+ (Integer.parseInt(txtAmmo.getText().replaceAll(" ", ""))  * ammoCost * rate)
@@ -537,6 +707,7 @@ public class MainWindow {
 				+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
 				+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
 		moneyTotal.setText("$" + total);
+		return total;
 	}
 	
 	public void setDollarAmount () {
@@ -548,5 +719,31 @@ public class MainWindow {
 		moneyAxle.setText("X $" + (axleCost * rate));
 		moneyTongue.setText("X $" + (tongueCost * rate));
 		moneyMedBox.setText("X $" + (medCost * rate));
+	}
+	
+	public void nextDay() {
+		day++;                    // Increase the Day count
+		supply.eatFood(portion); // Remove the food eaten in a day
+		// If miles left are greater than pace
+		if(milesLeft > pace) {    
+			milesLeft = milesLeft - pace; // Remove the amount traveled in a day
+		} else {                          // Else cap the milesLeft at 0
+			milesLeft = 0;   
+		}
+	}
+	
+	public void printSupplies() {
+		// Print all the supplies
+		mainText.insert(          
+				"The supplies you have are: " +
+				supply.getFood() + " lbs of food, " +
+				supply.getClothing() + " sets of clothing, " +
+				supply.getAmmo() + " boxes of bullets, " +
+				supply.getOxen() + " oxen, " +
+				supply.getWheel() + " wheels, " +
+				supply.getAxle() + " axles, " +
+				supply.getTongue() + " tongues, and " +
+				supply.getMedBox() + " medboxes.\n"
+				, 0);
 	}
 }
