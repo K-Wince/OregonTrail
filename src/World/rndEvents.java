@@ -19,16 +19,17 @@ public class rndEvents {
 	private int dog = 170;
 	
 	
-	public rndEvents() {
+	public rndEvents(Supplies s) {
+		
 		Random rand = new Random();
 		event = rand.nextInt(odds);
 		if(event <= mushroom) {
 			outcome = "One of your group ate a mushroom and walked off into the woods acting strangely and didn't return for 2 days"; 
 		}else if(event <= predator) {
-			if(getAmmo() >= 10) {
+			if(s.getAmmo() >= 10) {
 				outcome = "A mountain lion showed up and attacked but you were able to kill it with 10 shots and gained 100lbs of food";
-				for(int i = 0; i > 10; i++) { consumeAmmo();}
-				addFood(100);
+				for(int i = 0; i > 10; i++) { s.consumeAmmo();}
+				s.addFood(100);
 			}else {
 				outcome = "A mountain lion showed up and attacked but you were out of ammo so someone died";
 				//someone is killed
@@ -37,30 +38,30 @@ public class rndEvents {
 			
 		}else if(event <= lightning) {
 			//check weather if raining can happen and that there are at least two oxen;
-			if(getOxen() > 1) {
+			if(s.getOxen() > 1) {
 				outcome = "During the storm one of the oxen was struck by lightning and killed another was scared and escaped into the night";
-				loseOxen();
-				loseOxen();
+				s.loseOxen();
+				s.loseOxen();
 			}
 		}else if(event <= abandonedW) {
 				// could add the amount to outcome
 				outcome = "You found a broken abandoned wagon and were able to salvage some parts";
-				addWheel(rand.nextInt(3));
-				addAxle(rand.nextInt(2));
-				addTongue(rand.nextInt(2));
+				s.addWheel(rand.nextInt(3));
+				s.addAxle(rand.nextInt(2));
+				s.addTongue(rand.nextInt(2));
 		}else if(event <= lost) {
 			//someone got lost while collecting firewood
 		}else if(event <= berries) {
 			int x = rand.nextInt(100)+50;
 			outcome = "You found " + x + "lbs of edible berries growing and were able to harvest them";
-			addFood(x);
+			s.addFood(x);
 		}else if(event <= findpart) {
 			int x = rand.nextInt(3)+1;
-			if(x == 1) {addWheel(1);
+			if(x == 1) {s.addWheel(1);
 			outcome = "You found a wheel along the trail";}
-			else if(x==2) {addAxle(1);
+			else if(x==2) {s.addAxle(1);
 			outcome = "You found a axle along the trail";}
-			else {addTongue(1);
+			else {s.addTongue(1);
 			outcome = "You found a Tongue along the trail";}
 		}else if(event <= dog) {
 			//ups food and and water consumption

@@ -29,6 +29,7 @@ public class MainWindow {
 	private JFrame frame;
 	private JPanel titleScreen;
 	private JPanel creditsScreen;
+	private JPanel wagonShopScreen;
 	private JTextField textCredit;
 	private JTextField textStory;
 	private JFormattedTextField txtFood;
@@ -63,7 +64,7 @@ public class MainWindow {
 	private int axleCost = 10;
 	private int tongueCost = 10;
 	private int medCost = 25;
-	private JPanel wagonShopScreen;
+	
 	/**
 	 * Launch the application.
 	 */
