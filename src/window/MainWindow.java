@@ -14,6 +14,8 @@ import javax.swing.text.NumberFormatter;
 import World.Supplies;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
@@ -23,6 +25,9 @@ import java.awt.Color;
 import javax.swing.JFormattedTextField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.ImageIcon;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class MainWindow {
 	// GUI Variables
@@ -64,6 +69,7 @@ public class MainWindow {
 	private int axleCost = 10;
 	private int tongueCost = 10;
 	private int medCost = 25;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	/**
 	 * Launch the application.
@@ -96,7 +102,7 @@ public class MainWindow {
 		CardLayout card = new CardLayout();
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 669, 410);
+		frame.setBounds(100, 100, 669, 412);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(card);
 		
@@ -174,9 +180,7 @@ public class MainWindow {
 		JButton btnContinue = new JButton("Continue?");
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				card.show(frame.getContentPane(), "shop");
-				moneyLeft.setText("$" + supply.getMoney());
-				setDollarAmount();
+				card.show(frame.getContentPane(), "wagonShop");
 			}
 		});
 		btnContinue.setBounds(259, 327, 106, 23);
@@ -411,18 +415,116 @@ public class MainWindow {
 		shopScreen.add(infoMedBox);
 		
 		wagonShopScreen = new JPanel();
-		frame.getContentPane().add(wagonShopScreen, "name_802408356595100");
+		frame.getContentPane().add(wagonShopScreen, "wagonShop");
 		wagonShopScreen.setLayout(null);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(245, 264, 89, 23);
-		wagonShopScreen.add(btnNewButton);
 		
 		JLabel lblWagonShop = new JLabel("Hiram Young's Wagon Shop");
 		lblWagonShop.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWagonShop.setFont(new Font("SWItalt", Font.PLAIN, 26));
 		lblWagonShop.setBounds(10, 11, 637, 49);
 		wagonShopScreen.add(lblWagonShop);
+		
+		JLabel lblCoveredWagon = new JLabel("");
+		lblCoveredWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		Image covImg = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
+		lblCoveredWagon.setIcon(new ImageIcon(covImg));
+		lblCoveredWagon.setBounds(20, 71, 185, 120);
+		wagonShopScreen.add(lblCoveredWagon);
+		
+		JLabel lblRadio = new JLabel("");
+		lblRadio.setHorizontalAlignment(SwingConstants.CENTER);
+		Image radioImg = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(210, 120, Image.SCALE_SMOOTH);
+		lblRadio.setIcon(new ImageIcon(radioImg));
+		lblRadio.setBounds(215, 71, 210, 120);
+		wagonShopScreen.add(lblRadio);
+		
+		JLabel lblFancy = new JLabel("");
+		Image fancyImg = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
+		lblFancy.setIcon(new ImageIcon(fancyImg));
+		lblFancy.setBounds(435, 71, 185, 120);
+		wagonShopScreen.add(lblFancy);
+		
+		JLabel moneyCovWagon = new JLabel("$100");
+		moneyCovWagon.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyCovWagon.setBounds(10, 202, 195, 23);
+		wagonShopScreen.add(moneyCovWagon);
+		
+		JLabel moneyRadioFlyer = new JLabel("$200");
+		moneyRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyRadioFlyer.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyRadioFlyer.setBounds(215, 202, 210, 23);
+		wagonShopScreen.add(moneyRadioFlyer);
+		
+		JLabel moneyFancyCar = new JLabel("$400");
+		moneyFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyFancyCar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyFancyCar.setBounds(435, 202, 185, 23);
+		wagonShopScreen.add(moneyFancyCar);
+		
+		JLabel infoCovWagon = new JLabel("Covered Wagon");
+		infoCovWagon.setToolTipText("A wagon that is covered for all your trailing needs.");
+		infoCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		infoCovWagon.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoCovWagon.setBounds(20, 225, 185, 23);
+		wagonShopScreen.add(infoCovWagon);
+		
+		JLabel infoRadioFlyer = new JLabel("Radio Flyer Wagon");
+		infoRadioFlyer.setToolTipText("A bright red wagon that will allow you travel to your destination with ease.");
+		infoRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
+		infoRadioFlyer.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoRadioFlyer.setBounds(215, 225, 210, 23);
+		wagonShopScreen.add(infoRadioFlyer);
+		
+		JLabel infoFancyCar = new JLabel("Fancy Carriage");
+		infoFancyCar.setToolTipText("A beautiful carriage to take you to your destination in style.");
+		infoFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
+		infoFancyCar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoFancyCar.setBounds(435, 225, 185, 23);
+		wagonShopScreen.add(infoFancyCar);
+		
+		JButton btnWagonBuy = new JButton("Buy");
+		btnWagonBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				card.show(frame.getContentPane(), "mainScreen");
+				moneyLeft.setText("$" + supply.getMoney());
+				setDollarAmount();
+			}
+		});
+		btnWagonBuy.setBounds(276, 311, 89, 23);
+		wagonShopScreen.add(btnWagonBuy);
+		
+		JRadioButton btnCovWag = new JRadioButton("");
+		buttonGroup.add(btnCovWag);
+		btnCovWag.setBounds(100, 255, 36, 23);
+		wagonShopScreen.add(btnCovWag);
+		
+		JRadioButton btnRadioFlyer = new JRadioButton("");
+		buttonGroup.add(btnRadioFlyer);
+		btnRadioFlyer.setBounds(308, 255, 36, 23);
+		wagonShopScreen.add(btnRadioFlyer);
+		
+		JRadioButton btnFancyCar = new JRadioButton("");
+		buttonGroup.add(btnFancyCar);
+		btnFancyCar.setBounds(515, 255, 36, 23);
+		wagonShopScreen.add(btnFancyCar);
+		
+		JLabel lblMoneyInfo = new JLabel("Money Left: $1200");
+		lblMoneyInfo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMoneyInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMoneyInfo.setBounds(109, 311, 157, 19);
+		wagonShopScreen.add(lblMoneyInfo);
+		
+		JPanel mainScreen = new JPanel();
+		frame.getContentPane().add(mainScreen, "mainScreen");
+		mainScreen.setLayout(null);
+		
+		JLabel lblGround = new JLabel("");
+		Image prairieImg = new ImageIcon(MainWindow.class.getResource("/pictures/prairie.jpg")).getImage().getScaledInstance(657, 150, Image.SCALE_SMOOTH);
+		lblGround.setIcon(new ImageIcon(prairieImg));
+		lblGround.setBounds(0, 0, 657, 84);
+		mainScreen.add(lblGround);
 	}
 	
 	public void setTotal() {

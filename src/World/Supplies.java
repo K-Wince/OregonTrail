@@ -5,7 +5,7 @@ public class Supplies {
 	public Supplies() {};
 	
 	// Supplies Variables
-	private int money = 1000;
+	private int money = 1200;
 	private int food = 0;
 	private int clothing = 0;
 	private int ammo = 0;
