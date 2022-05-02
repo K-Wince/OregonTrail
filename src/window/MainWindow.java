@@ -33,6 +33,8 @@ import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
 public class MainWindow {
 	// GUI Variables
@@ -89,6 +91,7 @@ public class MainWindow {
 	private int axleCost = 10;
 	private int tongueCost = 10;
 	private int medCost = 25;
+	
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
@@ -156,6 +159,12 @@ public class MainWindow {
 		});
 		btnCredits.setBounds(263, 247, 89, 23);
 		titleScreen.add(btnCredits);
+		
+		JLabel lblNewLabel = new JLabel("");
+		Image titleImg = new ImageIcon(MainWindow.class.getResource("/pictures/titleImage.jpg")).getImage().getScaledInstance(657, 378, Image.SCALE_SMOOTH);
+		lblNewLabel.setIcon(new ImageIcon(titleImg));
+		lblNewLabel.setBounds(0, 0, 657, 378);
+		titleScreen.add(lblNewLabel);
 		
 		creditsScreen = new JPanel();
 		frame.getContentPane().add(creditsScreen, "credits");

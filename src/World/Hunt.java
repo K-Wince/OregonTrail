@@ -1,5 +1,6 @@
 package World;
 
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -7,6 +8,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+
+import window.MainWindow;
+
 import javax.swing.JLabel;
 
 public class Hunt{
@@ -16,7 +20,7 @@ public class Hunt{
 	private String results;
 	private int rabbits;
 	private int ducks;
-	private int bullets = 2;
+	private int bullets = 200;
 	private int random1;
 	private int random2;
 	private int random3;
@@ -29,6 +33,18 @@ public class Hunt{
 	private JLabel digitLabel;
 	private ActionListener closeHunt;
 	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Hunt window = new Hunt();
+					window.frmOregonTrail.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	/**
 	 * Launch the application.
