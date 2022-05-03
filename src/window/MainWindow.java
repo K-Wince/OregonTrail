@@ -681,7 +681,7 @@ public class MainWindow {
 			}
 		});
 		btnShop.setEnabled(false);
-		btnShop.setBounds(438, 320, 184, 23);
+		btnShop.setBounds(438, 320, 89, 23);
 		mainScreen.add(btnShop);
 		
 		JButton btnSupplies = new JButton("Supplies");
@@ -794,6 +794,20 @@ public class MainWindow {
 		infoHealth.setFont(new Font("Tahoma", Font.BOLD, 11));
 		infoHealth.setBounds(533, 145, 89, 14);
 		mainScreen.add(infoHealth);
+		
+		JButton btnHunt = new JButton("Hunt");
+		btnHunt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Hunt window = new Hunt();
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnHunt.setBounds(533, 320, 89, 23);
+		mainScreen.add(btnHunt);
 	}
 	
 	public int getTotal() {
