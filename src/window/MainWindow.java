@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
+import World.Hunt;
 import World.Supplies;
 
 import java.awt.Font;
@@ -113,6 +114,8 @@ public class MainWindow {
 	private JLabel infoMiles;
 	private JLabel infoLBFood;
 	private JLabel infoHealth;
+	private JButton btnShop;
+	private JLabel lblShop;
 	
 	
 	
@@ -241,7 +244,7 @@ public class MainWindow {
 		frame.getContentPane().add(shopScreen, "shop");
 		shopScreen.setLayout(null);
 		
-		JLabel lblShop = new JLabel("...Shop");
+		lblShop = new JLabel("...Shop");
 		lblShop.setFont(new Font("SWItalt", Font.PLAIN, 16));
 		lblShop.setBounds(10, 11, 368, 58);
 		shopScreen.add(lblShop);
@@ -660,18 +663,15 @@ public class MainWindow {
 		btnNext.setBounds(162, 344, 89, 23);
 		mainScreen.add(btnNext);
 		
-		JButton btnShop = new JButton("Shop");
+		btnShop = new JButton("Shop");
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				card.show(frame.getContentPane(), "shop");
+			}
+		});
 		btnShop.setEnabled(false);
-		btnShop.setBounds(438, 320, 89, 23);
+		btnShop.setBounds(438, 320, 184, 23);
 		mainScreen.add(btnShop);
-		
-		JButton btnHunt = new JButton("Hunt");
-		btnHunt.setBounds(533, 320, 89, 23);
-		mainScreen.add(btnHunt);
-		
-		JButton btnDiary = new JButton("Diary");
-		btnDiary.setBounds(438, 344, 89, 23);
-		mainScreen.add(btnDiary);
 		
 		JButton btnSupplies = new JButton("Supplies");
 		btnSupplies.addActionListener(new ActionListener() {
@@ -679,7 +679,7 @@ public class MainWindow {
 				printSupplies();
 			}
 		});
-		btnSupplies.setBounds(533, 344, 89, 23);
+		btnSupplies.setBounds(438, 344, 184, 23);
 		mainScreen.add(btnSupplies);
 		
 		JLabel statMiles = new JLabel("Miles Left:");
@@ -837,11 +837,18 @@ public class MainWindow {
 	}
 	
 	public void checkLocation() {
+		if(btnShop.isEnabled()) {
+			btnShop.setEnabled(false);
+		}
 		if (location == 0 && milesLeft == distance[0]) {
 			mainText.append("You are in " + landMarks[location] + ".\n");
 		}
 		// If it is not at the final location and its traveled the full distance
 		if(milesLeft == 0 && location != 14) {
+			if (location % 2 == 1) {
+				btnShop.setEnabled(true);
+				lblShop.setText(landMarks[location] + " Shop");
+			}
 			milesTraveled = 0;
 			location++;                      // Increase the Location
 			milesLeft = distance[location];  // Reset Miles Counter
@@ -852,13 +859,13 @@ public class MainWindow {
 			location++;                      // Increase the Location
 			mainText.append(                  // Let the user know they are in Nebraska
 				"You are in " + landMarks[location] + 
-				". You have made it to Nebraska.\n");
+				". You have made it to Oregon. Congratulations!\n");
 			btnNext.setEnabled(false);   // End the game
 		}
 		// If they reach 0 on any of these items then end the game
 		if(people == 0 || dayWithoutFood == 3) {
 			btnNext.setEnabled(false);
-			mainText.append("You did not make it to Nebraska. Sorry Bro.\n");
+			mainText.append("You did not make it to Oregon.\n");
 		}
 	}
 	
@@ -877,7 +884,7 @@ public class MainWindow {
 		}
 		// Print out the day and miles traveled
 		mainText.append("Day " + day + ":\n");
-		mainText.append("You traveled " + pace + "miles.\n");
+		mainText.append("You traveled " + pace + " miles.\n");
 		// Update milesLeft and pounds of food
 		infoMiles.setText(milesLeft + "");
 		infoLBFood.setText(supply.getFood() + "");

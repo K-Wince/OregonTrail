@@ -33,21 +33,9 @@ public class Hunt{
 	private JLabel digitLabel;
 	private ActionListener closeHunt;
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Hunt window = new Hunt();
-					window.frmOregonTrail.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	/**
 	 * Launch the application.
+	 * @return 
 	 */
 	
 	public Hunt(){
@@ -80,7 +68,6 @@ public class Hunt{
 				timer = new Timer(countdown, closeHunt);
 			}
 		});
-	
 	}
 	
 	public void clockActionPerformed(ActionEvent evt) {
