@@ -108,14 +108,14 @@ public class Hunt extends OregonTrailMain{
 		
 		
 		JButton buttonDuck = new JButton("Duck");
-		buttonDuck.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrailFrame/duck.jpg")));
+		buttonDuck.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrail/duck.jpg")));
 		buttonDuck.setBounds(48, 43, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDuck);
 		
 
 		
 		JButton buttonDeer = new JButton("Deer");
-		buttonDeer.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrailFrame/deer.jpg")));
+		buttonDeer.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrail/deer.jpg")));
 		buttonDeer.setBounds(295, 168, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDeer);
 		
