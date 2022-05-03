@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Hunt extends OregonTrailMain{
+public class Hunt{
 
 	private JFrame frmOregonTrail;
 	private java.util.Random rndGenerator = new java.util.Random();
@@ -108,14 +108,14 @@ public class Hunt extends OregonTrailMain{
 		
 		
 		JButton buttonDuck = new JButton("Duck");
-		buttonDuck.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrailFrame/duck.jpg")));
+		buttonDuck.setIcon(new ImageIcon(Hunt.class.getResource("/Pictures/duck.jpg")));
 		buttonDuck.setBounds(48, 43, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDuck);
 		
 
 		
 		JButton buttonDeer = new JButton("Deer");
-		buttonDeer.setIcon(new ImageIcon(Hunt.class.getResource("/OregonTrailFrame/deer.jpg")));
+		buttonDeer.setIcon(new ImageIcon(Hunt.class.getResource("/Pictures/deer.jpg")));
 		buttonDeer.setBounds(295, 168, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDeer);
 		
