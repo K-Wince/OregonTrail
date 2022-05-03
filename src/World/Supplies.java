@@ -66,10 +66,11 @@ public class Supplies {
 	}
 	
 	public boolean eatFood(int n) {
-		if (n < food && food != 0) {
+		if (n <= food && food != 0) {
 			food -= n;
 			return true;
 		} else {
+			food = 0;
 			return false;
 		}
 	}

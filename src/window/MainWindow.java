@@ -62,23 +62,42 @@ public class MainWindow {
 	private JLabel moneyMedBox;
 	private JLabel moneyLeft;
 	private JLabel moneyTotal;
-
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
+	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
+	private JTextArea mainText;
+	private JLabel lblWagon;
+	private JButton btnNext;
+	
 	// Game Variables
 	private Supplies supply = new Supplies();
 	private int day = 1;
 	private int milesLeft = 102;
+	private int milesTraveled = 0;
 	private int people = 5;
 	private int pace = 10;
 	private int portion = 10;
 	private String[] landMarks = {
 			"Independence, Missouri", 
 			"Kansas River Crossing",
-			"Big Blue River Crossing",
-			"Fort Kearney"
+			"Fort Kearney",
+			"Chimney Rock",
+			"Fort Loramie",
+			"Independence Rock",
+			"Fort Bridger",
+			"Soda Springs",
+			"Fort Hall",
+			"Snake River Crossing",
+			"Fort Boise",
+			"Blue Mountains",
+			"Fort Walla Walla",
+			"The Dalles",
+			"Willamete Valley"
 	};
-	private Integer[] distance = {102, 83, 118, -99};
+	private Integer[] distance = {102, 201, 250, 86, 190, 227, 162, 58, 182, 113, 160, 55, 120, 100, -99};
 	private int location = 0;
 	private Image wagonImage = null;
+	private int dayWithoutFood = 0;
 	
 	
 	// Cost of Items
@@ -91,11 +110,11 @@ public class MainWindow {
 	private int axleCost = 10;
 	private int tongueCost = 10;
 	private int medCost = 25;
+	private JLabel infoMiles;
+	private JLabel infoLBFood;
+	private JLabel infoHealth;
 	
-	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
-	private JTextArea mainText;
+	
 	
 	/**
 	 * Launch the application.
@@ -223,7 +242,7 @@ public class MainWindow {
 		shopScreen.setLayout(null);
 		
 		JLabel lblShop = new JLabel("...Shop");
-		lblShop.setFont(new Font("SWItalt", Font.PLAIN, 26));
+		lblShop.setFont(new Font("SWItalt", Font.PLAIN, 16));
 		lblShop.setBounds(10, 11, 368, 58);
 		shopScreen.add(lblShop);
 		
@@ -458,7 +477,7 @@ public class MainWindow {
 					// Remove the warning
 					infoNotEnoughFunds.setText(null);
 					// Add the supplies
-					supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")));
+					supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")) * 5);
 					supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")));
 					supply.addClothing(Integer.parseInt(txtClothing.getText().replaceAll(" ", "")));
 					supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")));
@@ -466,7 +485,11 @@ public class MainWindow {
 					supply.addAxle(Integer.parseInt(txtAxle.getText().replaceAll(" ", "")));
 					supply.addTongue(Integer.parseInt(txtTongue.getText().replaceAll(" ", "")));
 					supply.addMedBox(Integer.parseInt(txtMedBox.getText().replaceAll(" ", "")));
+					
 					// Go to the main screen
+					updateStats();
+					mainText.append("You have decided to set off on your journey.\n");
+					checkLocation();
 					card.show(frame.getContentPane(), "mainScreen");
 				}
 			}
@@ -578,8 +601,11 @@ public class MainWindow {
 					supply.spendMoney(400);
 				} 
 				
+				lblWagon.setIcon(new ImageIcon(wagonImage));
+				
 				moneyLeft.setText("$" + supply.getMoney());
 				setDollarAmount();
+				lblShop.setText(landMarks[location] + " Shop");
 				card.show(frame.getContentPane(), "shop");
 			}
 		});
@@ -597,13 +623,13 @@ public class MainWindow {
 		JLabel lblGround = new JLabel("");
 		Image prairieImg = new ImageIcon(MainWindow.class.getResource("/pictures/prairie.jpg")).getImage().getScaledInstance(657, 150, Image.SCALE_SMOOTH);
 		
-		JLabel lblWagon = new JLabel("");
+		lblWagon = new JLabel("");
 		lblWagon.setBounds(592, 29, 65, 55);
 		mainScreen.add(lblWagon);
 		
 		JLabel lblPath = new JLabel("X   -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -");
 		lblPath.setForeground(Color.WHITE);
-		lblPath.setBounds(10, 44, 637, 29);
+		lblPath.setBounds(10, 44, 647, 29);
 		mainScreen.add(lblPath);
 		lblGround.setIcon(new ImageIcon(prairieImg));
 		lblGround.setBounds(0, 0, 657, 84);
@@ -622,7 +648,15 @@ public class MainWindow {
 		scrollPane.setViewportView(mainText);
 		mainText.setEditable(false);
 		
-		JButton btnNext = new JButton("Next Day");
+		btnNext = new JButton("Next Day");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//fred
+				nextDay();
+				updateStats();
+				checkLocation();
+			}
+		});
 		btnNext.setBounds(162, 344, 89, 23);
 		mainScreen.add(btnNext);
 		
@@ -674,36 +708,81 @@ public class MainWindow {
 		mainScreen.add(statPortion);
 		
 		JRadioButton rdbtnSlow = new JRadioButton("Slow");
+		rdbtnSlow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 5;
+			}
+		});
 		buttonGroup_1.add(rdbtnSlow);
 		rdbtnSlow.setBounds(448, 218, 79, 23);
 		mainScreen.add(rdbtnSlow);
 		
 		JRadioButton rdbtnSteady = new JRadioButton("Steady");
+		rdbtnSteady.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 10;
+			}
+		});
 		rdbtnSteady.setSelected(true);
 		buttonGroup_1.add(rdbtnSteady);
 		rdbtnSteady.setBounds(448, 244, 79, 23);
 		mainScreen.add(rdbtnSteady);
 		
 		JRadioButton rdbtnGruelling = new JRadioButton("Gruelling");
+		rdbtnGruelling.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 15;
+			}
+		});
 		buttonGroup_1.add(rdbtnGruelling);
 		rdbtnGruelling.setBounds(448, 273, 79, 23);
 		mainScreen.add(rdbtnGruelling);
 		
 		JRadioButton rdbtnSkim = new JRadioButton("Skim");
+		rdbtnSkim.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				portion = 5;
+			}
+		});
 		buttonGroup_2.add(rdbtnSkim);
 		rdbtnSkim.setBounds(543, 218, 79, 23);
 		mainScreen.add(rdbtnSkim);
 		
 		JRadioButton rdbtnNormal = new JRadioButton("Normal");
+		rdbtnNormal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				portion = 10;
+			}
+		});
 		rdbtnNormal.setSelected(true);
 		buttonGroup_2.add(rdbtnNormal);
 		rdbtnNormal.setBounds(543, 244, 79, 23);
 		mainScreen.add(rdbtnNormal);
 		
 		JRadioButton rdbtnFilling = new JRadioButton("Filling");
+		rdbtnFilling.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				portion = 15;
+			}
+		});
 		buttonGroup_2.add(rdbtnFilling);
 		rdbtnFilling.setBounds(543, 273, 79, 23);
 		mainScreen.add(rdbtnFilling);
+		
+		infoMiles = new JLabel("");
+		infoMiles.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoMiles.setBounds(533, 95, 89, 14);
+		mainScreen.add(infoMiles);
+		
+		infoLBFood = new JLabel("");
+		infoLBFood.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoLBFood.setBounds(533, 120, 89, 14);
+		mainScreen.add(infoLBFood);
+		
+		infoHealth = new JLabel("Good");
+		infoHealth.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoHealth.setBounds(533, 145, 89, 14);
+		mainScreen.add(infoHealth);
 	}
 	
 	public int getTotal() {
@@ -736,6 +815,7 @@ public class MainWindow {
 		// If miles left are greater than pace
 		if(milesLeft > pace) {    
 			milesLeft = milesLeft - pace; // Remove the amount traveled in a day
+			milesTraveled += pace;
 		} else {                          // Else cap the milesLeft at 0
 			milesLeft = 0;   
 		}
@@ -754,5 +834,54 @@ public class MainWindow {
 				supply.getTongue() + " tongues, and " +
 				supply.getMedBox() + " medboxes.\n"
 				, 0);
+	}
+	
+	public void checkLocation() {
+		if (location == 0 && milesLeft == distance[0]) {
+			mainText.append("You are in " + landMarks[location] + ".\n");
+		}
+		// If it is not at the final location and its traveled the full distance
+		if(milesLeft == 0 && location != 14) {
+			milesTraveled = 0;
+			location++;                      // Increase the Location
+			milesLeft = distance[location];  // Reset Miles Counter
+			mainText.append(                  // Let the player know where they are
+					"You are in " + landMarks[location] + ". You have "
+					+ milesLeft + " miles until the next landmark.\n");
+		} else if (milesLeft == 0) {         // If it is at the final location
+			location++;                      // Increase the Location
+			mainText.append(                  // Let the user know they are in Nebraska
+				"You are in " + landMarks[location] + 
+				". You have made it to Nebraska.\n");
+			btnNext.setEnabled(false);   // End the game
+		}
+		// If they reach 0 on any of these items then end the game
+		if(people == 0 || dayWithoutFood == 3) {
+			btnNext.setEnabled(false);
+			mainText.append("You did not make it to Nebraska. Sorry Bro.\n");
+		}
+	}
+	
+	public void updateStats() {
+		// If they have no food then increase the day counter
+		if (supply.getFood() == 0) {
+			dayWithoutFood++;
+		} else {
+			dayWithoutFood = 0;
+		}
+		// Determine the Health Readout of the wagon riders
+		switch(dayWithoutFood) {
+		case 0: infoHealth.setText("Good"); break;
+		case 1: infoHealth.setText("Starving"); break;
+		case 2: infoHealth.setText("Bad"); break;
+		}
+		// Print out the day and miles traveled
+		mainText.append("Day " + day + ":\n");
+		mainText.append("You traveled " + pace + "miles.\n");
+		// Update milesLeft and pounds of food
+		infoMiles.setText(milesLeft + "");
+		infoLBFood.setText(supply.getFood() + "");
+		// Update the wagon graphic
+		lblWagon.setLocation(592 - (int)(592.0 * ((double)milesTraveled/distance[location])),29);
 	}
 }
