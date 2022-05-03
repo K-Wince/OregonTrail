@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Hunt extends OregonTrailMain{
+public class Hunt{
 
 	private JFrame frmOregonTrail;
 	private java.util.Random rndGenerator = new java.util.Random();

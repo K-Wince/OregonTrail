@@ -44,7 +44,7 @@ public class MainWindow {
 	private JPanel creditsScreen;
 	private JPanel wagonShopScreen;
 	private JTextField textCredit;
-	private JTextField textStory;
+	private JTextArea textStory;
 	private JFormattedTextField txtFood;
 	private JFormattedTextField txtClothing;
 	private JFormattedTextField txtAmmo;
@@ -223,12 +223,23 @@ public class MainWindow {
 		lblStory.setBounds(10, 11, 445, 49);
 		storyScreen.add(lblStory);
 		
-		textStory = new JTextField();
+		textStory = new JTextArea();
 		textStory.setBackground(Color.WHITE);
+		String story = "Hattie and her family have become increasingly unhappy in Missouri and are looking to move. Hattie, along with her mom and dad,\r\n"
+				+ "Augusta and Charles, plus her two younger brothers, Ben and Jake. They take sail towards Independence ready to move on to a\r\n"
+				+ "bigger and better life in Oregon. Hattie and her family arrive in Independence looking around the large town. Hattie begins to journal.\r\n"
+				+ "Hattie remarks how she is scared to start a new life, but also excited because she has read and heard many great things about Oregon.\r\n"
+				+ "They begin to sell all of their household items and it hits Hattie that it is truly time to go. Hattie gathers her belongings that she could not live without. Then, her and her family set sail for Independence again to go buy a wagon. Hattie and her family bought \r\n"
+				+ "a wagon from their shop Hiram Young's in Independence. They acquired a big shiny brown wagon. \r\n"
+				+ "They loaded their wagon with supplies and started their journey. They approached multiple Forts and Landmarks along their way. \r\n"
+				+ "Sometimes they stopped to look around, while other times they were too tired to stop and look around at others. \r\n"
+				+ "\r\n"
+				+ "Hattie and her family traveled hours and hours throughout the day tiring themselves as they made their way to Oregon. \r\n";
 		textStory.setEditable(false);
-		textStory.setText("Placeholder Text for Story");
+		
 		textStory.setColumns(10);
 		textStory.setBounds(10, 55, 637, 261);
+		textStory.append(story);
 		storyScreen.add(textStory);
 		
 		JButton btnContinue = new JButton("Continue?");
