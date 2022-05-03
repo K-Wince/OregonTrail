@@ -848,7 +848,7 @@ public class MainWindow {
 	
 	public void printSupplies() {
 		// Print all the supplies
-		mainText.insert(          
+		mainText.append(          
 				"The supplies you have are: " +
 				supply.getFood() + " lbs of food, " +
 				supply.getClothing() + " sets of clothing, " +
@@ -858,7 +858,7 @@ public class MainWindow {
 				supply.getAxle() + " axles, " +
 				supply.getTongue() + " tongues, and " +
 				supply.getMedBox() + " medboxes.\n"
-				, 0);
+				);
 	}
 	
 	public void checkLocation() {
@@ -869,7 +869,7 @@ public class MainWindow {
 			mainText.append("You are in " + landMarks[location] + ".\n");
 		}
 		// If it is not at the final location and its traveled the full distance
-		if(milesLeft == 0 && location != 14) {
+		if(milesLeft == 0 && location != 13) {
 			if (location % 2 == 1) {
 				btnShop.setEnabled(true);
 				lblShop.setText(landMarks[location] + " Shop");

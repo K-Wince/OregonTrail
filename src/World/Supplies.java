@@ -57,7 +57,7 @@ public class Supplies {
 	// Consume Supplies
 	
 	public boolean spendMoney(int n) {
-		if (n < money && money != 0) {
+		if (n <= money && money != 0) {
 			money -= n;
 			return true;
 		} else {
