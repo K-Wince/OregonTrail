@@ -13,6 +13,7 @@ import javax.swing.text.NumberFormatter;
 
 import World.Hunt;
 import World.Supplies;
+import World.rndEvents;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -665,8 +666,7 @@ public class MainWindow {
 		btnNext = new JButton("Next Day");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//fred
-				nextDay();
+				nextDay(supply);
 				updateStats();
 				checkLocation();
 			}
@@ -834,9 +834,12 @@ public class MainWindow {
 		moneyMedBox.setText("X $" + (medCost * rate));
 	}
 	
-	public void nextDay() {
+	public void nextDay(Supplies supplies) {
 		day++;                    // Increase the Day count
-		supply.eatFood(portion); // Remove the food eaten in a day
+		supply.eatFood(portion);
+		rndEvents event = new rndEvents(supply); //create new random event 	
+		mainText.append(event.PrintOutcome()); // print the outcome of the event
+		// Remove the food eaten in a day
 		// If miles left are greater than pace
 		if(milesLeft > pace) {    
 			milesLeft = milesLeft - pace; // Remove the amount traveled in a day

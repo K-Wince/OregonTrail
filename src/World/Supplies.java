@@ -5,6 +5,7 @@ public class Supplies {
 	public Supplies() {};
 	
 	// Supplies Variables
+	private String outcome = " ";
 	private int money = 1200;
 	private int food = 0;
 	private int clothing = 0;
@@ -20,6 +21,10 @@ public class Supplies {
 
 	public int getMoney() {
 		return money;
+	}
+	
+	public String getOutcome() {
+		return outcome;
 	}
 
 	public int getFood() {
@@ -174,4 +179,13 @@ public class Supplies {
 	public void addMedBox(int n) {
 		medBox += n;
 	}
+	
+
+	public void setOutcome(String eventString) {
+		outcome = eventString;
+	}
+	
+
 }
+
+

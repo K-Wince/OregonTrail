@@ -5,18 +5,18 @@ import java.util.Random;
 
 public class rndEvents {
 	private String outcome;
-	private int odds = 1000; //what the random value will be out of
+	private final int odds = 1000; //what the random value will be out of
 	private int event;
-	//private int dino = 1;
-	private int mushroom = 10;
-	private int predator = 20;
-	private int sickness = 50;
-	private int lightning = 80;
-	private int abandonedW = 90;
-	private int lost = 100;
-	private int berries = 140;
-	private int findpart = 160;
-	private int dog = 170;
+	private final int dino = 1;
+	private final int mushroom = dino + 10;
+	private final int predator = mushroom + 20;
+	private final int sickness = predator + 50;
+	private final int lightning = sickness + 80;
+	private final int abandonedW = lightning + 90;
+	private final int lost = abandonedW + 100;
+	private final int berries = lost + 140;
+	private final int findpart = berries + 160;
+	private final int x = 170;
 	
 	
 	public rndEvents(Supplies s) {
@@ -24,7 +24,7 @@ public class rndEvents {
 		Random rand = new Random();
 		event = rand.nextInt(odds);
 		if(event <= mushroom) {
-			outcome = "One of your group ate a mushroom and walked off into the woods acting strangely and didn't return for 2 days"; 
+		 outcome = "One of your group ate a mushroom and walked off into the woods acting strangely and didn't return for 2 days"; 
 		}else if(event <= predator) {
 			if(s.getAmmo() >= 10) {
 				outcome = "A mountain lion showed up and attacked but you were able to kill it with 10 shots and gained 100lbs of food";
@@ -63,11 +63,18 @@ public class rndEvents {
 			outcome = "You found a axle along the trail";}
 			else {s.addTongue(1);
 			outcome = "You found a Tongue along the trail";}
-		}else if(event <= dog) {
-			//ups food and and water consumption
+		}else if(event <= x) {
+			
 		}
+		s.setOutcome(outcome);
 		//return outcome;
-	};
+	}
+
+
+	public String PrintOutcome() { // Prints the outcome string
+		return outcome;
+		
+	}
 	
 	
 	
