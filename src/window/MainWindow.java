@@ -100,7 +100,7 @@ public class MainWindow {
 	private int location = 0;
 	private Image wagonImage = null;
 	private int dayWithoutFood = 0;
-	
+	private boolean Injured = false;
 	
 	// Cost of Items
 	private int rate = 1;
@@ -838,7 +838,9 @@ public class MainWindow {
 		day++;                    // Increase the Day count
 		supply.eatFood(portion);
 		rndEvents event = new rndEvents(supply); //create new random event 	
-		mainText.append(event.PrintOutcome()); // print the outcome of the event
+		mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
+		if(Injured == true && event.getInjury() == true){    }
+		else {Injured = event.getInjury();}
 		// Remove the food eaten in a day
 		// If miles left are greater than pace
 		if(milesLeft > pace) {    
@@ -861,6 +863,7 @@ public class MainWindow {
 				supply.getAxle() + " axles, " +
 				supply.getTongue() + " tongues, and " +
 				supply.getMedBox() + " medboxes.\n"
+				
 				);
 	}
 	
@@ -906,10 +909,21 @@ public class MainWindow {
 		}
 		// Determine the Health Readout of the wagon riders
 		switch(dayWithoutFood) {
-		case 0: infoHealth.setText("Good"); break;
+		case 0: infoHealth.setText("Good"); break; 
 		case 1: infoHealth.setText("Starving"); break;
 		case 2: infoHealth.setText("Bad"); break;
 		}
+		
+		if(Injured){
+			if(supply.getMedBox()>=1) {
+				mainText.append("You were injured and used a Medbox");
+				supply.consumeMedBox();	
+				
+			}else {
+				infoHealth.setText("Injured");
+			}
+		}
+		
 		// Print out the day and miles traveled
 		mainText.append("Day " + day + ":\n");
 		mainText.append("You traveled " + pace + " miles.\n");

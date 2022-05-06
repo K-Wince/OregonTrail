@@ -3,10 +3,11 @@ package World;
 import java.util.Random;
 
 
-public class rndEvents {
+public class rndEvents  {
 	private String outcome;
 	private final int odds = 1000; //what the random value will be out of
 	private int event;
+	private boolean Injury;
 	private final int dino = 1;
 	private final int mushroom = dino + 10;
 	private final int predator = mushroom + 20;
@@ -27,12 +28,12 @@ public class rndEvents {
 		 outcome = "One of your group ate a mushroom and walked off into the woods acting strangely and didn't return for 2 days"; 
 		}else if(event <= predator) {
 			if(s.getAmmo() >= 10) {
-				outcome = "A mountain lion showed up and attacked but you were able to kill it with 10 shots and gained 100lbs of food";
-				for(int i = 0; i > 10; i++) { s.consumeAmmo();}
+				outcome = "A mountain lion showed up and attacked but you were able to kill it with 4 shots and gained 100lbs of food";
+				for(int i = 0; i > 3; i++) { s.consumeAmmo();}
 				s.addFood(100);
 			}else {
-				outcome = "A mountain lion showed up and attacked but you were out of ammo so someone died";
-				//someone is killed
+				outcome = "A mountain lion showed up and attacked but you were out of ammo and were injured";
+				
 			}
 		}else if(event <= sickness) {
 			
@@ -66,8 +67,7 @@ public class rndEvents {
 		}else if(event <= x) {
 			
 		}
-		s.setOutcome(outcome);
-		//return outcome;
+
 	}
 
 
@@ -77,10 +77,11 @@ public class rndEvents {
 	}
 	
 	
+	public boolean getInjury() {
+	return Injury;
+	}
 	
-	
-
-	
-	
-	
+	public void setInjury(boolean I) {
+		 Injury = I;
+		}
 }
