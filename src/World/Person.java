@@ -33,6 +33,14 @@ if(alive) { return false;}
 else {return true;}
 }
 
+public String checkHealth(){
+	String status;
+	if(health == 0) { status = name + " is dead";}
+	else if(health == 1) { status = name + " is dead";}
+	else { status = name + " is dead";}
+	return status;
+}
+
 public void setAlive(boolean x) {
 alive = x;
 }

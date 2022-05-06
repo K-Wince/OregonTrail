@@ -862,6 +862,7 @@ public class MainWindow {
 	Random rand = new Random();
 	int x = rand.nextInt(5);
 	boolean cont = false;
+	
 	do{
 	switch(x) {
 	case 0: temp = Ben; break;
@@ -871,16 +872,21 @@ public class MainWindow {
 	case 5: temp = Charles; break;}
 	if(temp.checkDeath() == false) {cont = true; } //allows loop to move on if they are alive
 	}while(cont = false);
+	
 	rndEvents event = new rndEvents(supply, temp); //create new random event
-	mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
-	checkInjury(temp);
+	if(event.happened()) {mainText.append(event.PrintOutcome()+ "\n");} // print the outcome of the event if one occured
+	if(event.getInjury()) {
+		temp.LooseHealth();
+		checkInjury(temp);
+	}
+	
 	switch(x) {
 	case 0: Ben = temp; break;
 	case 1: Jake = temp; break;
 	case 2: Hattie = temp; break;
 	case 4: Agusta = temp; break;
 	case 5: Charles = temp; break; }
-	{Injured = event.getInjury();}
+	
 	// Remove the food eaten in a day
 	// If miles left are greater than pace
 	if(milesLeft > pace) {    
@@ -926,6 +932,13 @@ public class MainWindow {
 	mainText.append(                  // Let the player know where they are
 	"You are in " + landMarks[location] + ". You have "
 	+ milesLeft + " miles until the next landmark.\n");
+	
+	mainText.append(Ben.checkHealth());
+	mainText.append(Jake.checkHealth());  //update character health
+	mainText.append(Hattie.checkHealth());
+	mainText.append(Agusta.checkHealth());
+	mainText.append(Charles.checkHealth());
+	
 	} else if (milesLeft == 0) {         // If it is at the final location
 	location++;                      // Increase the Location
 	mainText.append(                  // Let the user know they are in Nebraska
