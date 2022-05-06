@@ -33,15 +33,14 @@ public class rndEvents  {
 				s.addFood(100);
 			}else {
 				outcome = "A mountain lion showed up and attacked but you were out of ammo and were injured";
-				
+				Injury = true;
 			}
 		}else if(event <= sickness) {
 			
 		}else if(event <= lightning) {
 			//check weather if raining can happen and that there are at least two oxen;
 			if(s.getOxen() > 1) {
-				outcome = "During the storm one of the oxen was struck by lightning and killed another was scared and escaped into the night";
-				s.loseOxen();
+				outcome = "During a storm one of the oxen was struck by lightning and killed";
 				s.loseOxen();
 			}
 		}else if(event <= abandonedW) {
@@ -78,7 +77,9 @@ public class rndEvents  {
 	
 	
 	public boolean getInjury() {
-	return Injury;
+		boolean x = Injury;
+		Injury = false;
+		return x;
 	}
 	
 	public void setInjury(boolean I) {

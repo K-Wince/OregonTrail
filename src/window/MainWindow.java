@@ -839,7 +839,10 @@ public class MainWindow {
 		supply.eatFood(portion);
 		rndEvents event = new rndEvents(supply); //create new random event 	
 		mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
-		if(Injured == true && event.getInjury() == true){    }
+		if(Injured == true && event.getInjury() == true){  //checks if there was already an injury
+			mainText.append("Another member lost their life due to injuries"); //show user
+			people -= 1; //remove a person
+		}
 		else {Injured = event.getInjury();}
 		// Remove the food eaten in a day
 		// If miles left are greater than pace
@@ -893,11 +896,7 @@ public class MainWindow {
 				". You have made it to Oregon. Congratulations!\n");
 			btnNext.setEnabled(false);   // End the game
 		}
-		// If they reach 0 on any of these items then end the game
-		if(people == 0 || dayWithoutFood == 3) {
-			btnNext.setEnabled(false);
-			mainText.append("You did not make it to Oregon.\n");
-		}
+		checkLoss(); //checks for a loss
 	}
 	
 	public void updateStats() {
@@ -924,6 +923,8 @@ public class MainWindow {
 			}
 		}
 		
+		
+		
 		// Print out the day and miles traveled
 		mainText.append("Day " + day + ":\n");
 		mainText.append("You traveled " + pace + " miles.\n");
@@ -933,4 +934,17 @@ public class MainWindow {
 		// Update the wagon graphic
 		lblWagon.setLocation(592 - (int)(592.0 * ((double)milesTraveled/distance[location])),29);
 	}
+	
+	
+	public void checkLoss() {
+		// If they reach 0 on any of these items then end the game
+				if(people == 0 || dayWithoutFood == 3) {
+					btnNext.setEnabled(false);
+					mainText.append("You did not make it to Oregon.\n");
+				}
+			
+	}
+	
+	
+	
 }
