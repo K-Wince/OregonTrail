@@ -30,9 +30,9 @@ public class rndEvents  {
 				Injury = true;
 			}
 		}else if(event <= predator) {
-			if(s.getAmmo() >= 10) {
+			if(s.getAmmo() >= 1) {
 				outcome = "A mountain lion showed up and attacked " + P.getName() + ", but they were able to kill it with the gun and gained 100lbs of food";
-				s.consumeAmmo(); s.consumeAmmo();
+				s.consumeAmmo();
 				for(int i = 0; i > 3; i++) { s.consumeAmmo();}
 				s.addFood(100);
 			}else {

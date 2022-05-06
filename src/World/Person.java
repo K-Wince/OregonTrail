@@ -24,7 +24,7 @@ health -= 1;
 if (health == 0) { alive = false;}
 }
 
-public void GainHealth() {
+public void gainHealth() {
 health += 1;
 }
 

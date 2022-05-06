@@ -996,7 +996,7 @@ public class MainWindow {
 	if(supply.getMedBox()>=1) {
 	mainText.append(p.getName() + " was injured and used a Medbox");
 	supply.consumeMedBox();
-	
+	p.gainHealth();
 	}
 	}
 
