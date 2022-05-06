@@ -135,23 +135,23 @@ public class MainWindow {
 	* Launch the application.
 	*/
 	public static void main(String[] args) {
-	EventQueue.invokeLater(new Runnable() {
-	public void run() {
-	try {
-	MainWindow window = new MainWindow();
-	window.frame.setVisible(true);
-	} catch (Exception e) {
-	e.printStackTrace();
-	}
-	}
-	});
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainWindow window = new MainWindow();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**
 	* Create the application.
 	*/
 	public MainWindow() {
-	initialize();
+		initialize();
 	}
 	
 	
@@ -159,456 +159,466 @@ public class MainWindow {
 	* Initialize the contents of the frame.
 	*/
 	private void initialize() {
-	CardLayout card = new CardLayout();
+		CardLayout card = new CardLayout();
 	
-	frame = new JFrame();
-	frame.setBounds(100, 100, 669, 412);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.getContentPane().setLayout(card);
+		frame = new JFrame();
+		frame.setBounds(100, 100, 669, 412);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(card);
+		
+		// Title Screen
+		titleScreen = new JPanel();
+		frame.getContentPane().add(titleScreen, "title");
+		titleScreen.setLayout(null);
+		
+		JLabel lblTitle = new JLabel("Oregon Trail");
+		lblTitle.setFont(new Font("SWItalt", Font.PLAIN, 44));
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setBounds(138, 80, 355, 100);
+		titleScreen.add(lblTitle);
+		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// When the user presses the play button then go to the story screen
+				card.show(frame.getContentPane(), "story");
+			}
+		});
+		btnPlay.setBounds(263, 213, 89, 23);
+		titleScreen.add(btnPlay);
 	
-	titleScreen = new JPanel();
-	frame.getContentPane().add(titleScreen, "title");
-	titleScreen.setLayout(null);
+		JButton btnCredits = new JButton("Credits");
+		btnCredits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// When the user presses the credits button then go to credits screen
+				card.next(frame.getContentPane());
+			}
+		});
+		btnCredits.setBounds(263, 247, 89, 23);
+		titleScreen.add(btnCredits);
+		
+		JLabel lblNewLabel = new JLabel("");
+		Image titleImg = new ImageIcon(MainWindow.class.getResource("/pictures/titleImage.jpg")).getImage().getScaledInstance(657, 378, Image.SCALE_SMOOTH);
+		lblNewLabel.setIcon(new ImageIcon(titleImg));
+		lblNewLabel.setBounds(0, 0, 657, 378);
+		titleScreen.add(lblNewLabel);
+		
+		// Credits Screen
+		creditsScreen = new JPanel();
+		frame.getContentPane().add(creditsScreen, "credits");
+		creditsScreen.setLayout(null);
+		
+		textCredit = new JTextField();
+		textCredit.setText("Placeholder Text for Credits");
+		textCredit.setBackground(Color.WHITE);
+		textCredit.setEditable(false);
+		textCredit.setBounds(10, 57, 637, 261);
+		creditsScreen.add(textCredit);
+		textCredit.setColumns(10);
+		
+		JLabel lblCredits = new JLabel("Credits");
+		lblCredits.setFont(new Font("SWItalt", Font.PLAIN, 26));
+		lblCredits.setBounds(10, 24, 485, 32);
+		creditsScreen.add(lblCredits);
 	
-	JLabel lblTitle = new JLabel("Oregon Trail");
-	lblTitle.setFont(new Font("SWItalt", Font.PLAIN, 44));
-	lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-	lblTitle.setBounds(138, 80, 355, 100);
-	titleScreen.add(lblTitle);
+		JButton btnMainMenu = new JButton("Main Menu");
+		btnMainMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// When the user presses main menu then go back to title screen
+				card.previous(frame.getContentPane());
+			}
+		});
+		btnMainMenu.setBounds(268, 329, 106, 23);
+		creditsScreen.add(btnMainMenu);
+		
+		// Story Screen
+		JPanel storyScreen = new JPanel();
+		frame.getContentPane().add(storyScreen, "story");
+		storyScreen.setLayout(null);
+		
+		JLabel lblStory = new JLabel("Story");
+		lblStory.setFont(new Font("SWItalt", Font.PLAIN, 26));
+		lblStory.setBounds(10, 11, 445, 49);
+		storyScreen.add(lblStory);
 	
-	JButton btnPlay = new JButton("Play");
-	btnPlay.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	card.show(frame.getContentPane(), "story");
-	}
-	});
-	btnPlay.setBounds(263, 213, 89, 23);
-	titleScreen.add(btnPlay);
+		textStory = new JTextArea();
+		textStory.setBackground(Color.WHITE);
+		String story = "Hattie and her family have become increasingly unhappy in Missouri and are looking to move. Hattie, along with her mom and dad,\r\n"
+		+ "Augusta and Charles, plus her two younger brothers, Ben and Jake. They take sail towards Independence ready to move on to a\r\n"
+		+ "bigger and better life in Oregon. Hattie and her family arrive in Independence looking around the large town. Hattie begins to journal.\r\n"
+		+ "Hattie remarks how she is scared to start a new life, but also excited because she has read and heard many great things about Oregon.\r\n"
+		+ "They begin to sell all of their household items and it hits Hattie that it is truly time to go. Hattie gathers her belongings that she could not live without. Then, her and her family set sail for Independence again to go buy a wagon. Hattie and her family bought \r\n"
+		+ "a wagon from their shop Hiram Young's in Independence. They acquired a big shiny brown wagon. \r\n"
+		+ "They loaded their wagon with supplies and started their journey. They approached multiple Forts and Landmarks along their way. \r\n"
+		+ "Sometimes they stopped to look around, while other times they were too tired to stop and look around at others. \r\n"
+		+ "\r\n"
+		+ "Hattie and her family traveled hours and hours throughout the day tiring themselves as they made their way to Oregon. \r\n";
+		textStory.setEditable(false);
 	
-	JButton btnCredits = new JButton("Credits");
-	btnCredits.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	card.next(frame.getContentPane());
-	}
-	});
-	btnCredits.setBounds(263, 247, 89, 23);
-	titleScreen.add(btnCredits);
-	
-	JLabel lblNewLabel = new JLabel("");
-	Image titleImg = new ImageIcon(MainWindow.class.getResource("/pictures/titleImage.jpg")).getImage().getScaledInstance(657, 378, Image.SCALE_SMOOTH);
-	lblNewLabel.setIcon(new ImageIcon(titleImg));
-	lblNewLabel.setBounds(0, 0, 657, 378);
-	titleScreen.add(lblNewLabel);
-	
-	creditsScreen = new JPanel();
-	frame.getContentPane().add(creditsScreen, "credits");
-	creditsScreen.setLayout(null);
-	
-	textCredit = new JTextField();
-	textCredit.setText("Placeholder Text for Credits");
-	textCredit.setBackground(Color.WHITE);
-	textCredit.setEditable(false);
-	textCredit.setBounds(10, 57, 637, 261);
-	creditsScreen.add(textCredit);
-	textCredit.setColumns(10);
-	
-	JLabel lblCredits = new JLabel("Credits");
-	lblCredits.setFont(new Font("SWItalt", Font.PLAIN, 26));
-	lblCredits.setBounds(10, 24, 485, 32);
-	creditsScreen.add(lblCredits);
-	
-	JButton btnMainMenu = new JButton("Main Menu");
-	btnMainMenu.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	card.previous(frame.getContentPane());
-	}
-	});
-	btnMainMenu.setBounds(268, 329, 106, 23);
-	creditsScreen.add(btnMainMenu);
-	
-	JPanel storyScreen = new JPanel();
-	frame.getContentPane().add(storyScreen, "story");
-	storyScreen.setLayout(null);
-	
-	JLabel lblStory = new JLabel("Story");
-	lblStory.setFont(new Font("SWItalt", Font.PLAIN, 26));
-	lblStory.setBounds(10, 11, 445, 49);
-	storyScreen.add(lblStory);
-	
-	textStory = new JTextArea();
-	textStory.setBackground(Color.WHITE);
-	String story = "Hattie and her family have become increasingly unhappy in Missouri and are looking to move. Hattie, along with her mom and dad,\r\n"
-	+ "Augusta and Charles, plus her two younger brothers, Ben and Jake. They take sail towards Independence ready to move on to a\r\n"
-	+ "bigger and better life in Oregon. Hattie and her family arrive in Independence looking around the large town. Hattie begins to journal.\r\n"
-	+ "Hattie remarks how she is scared to start a new life, but also excited because she has read and heard many great things about Oregon.\r\n"
-	+ "They begin to sell all of their household items and it hits Hattie that it is truly time to go. Hattie gathers her belongings that she could not live without. Then, her and her family set sail for Independence again to go buy a wagon. Hattie and her family bought \r\n"
-	+ "a wagon from their shop Hiram Young's in Independence. They acquired a big shiny brown wagon. \r\n"
-	+ "They loaded their wagon with supplies and started their journey. They approached multiple Forts and Landmarks along their way. \r\n"
-	+ "Sometimes they stopped to look around, while other times they were too tired to stop and look around at others. \r\n"
-	+ "\r\n"
-	+ "Hattie and her family traveled hours and hours throughout the day tiring themselves as they made their way to Oregon. \r\n";
-	textStory.setEditable(false);
-	
-	textStory.setColumns(10);
-	textStory.setBounds(10, 55, 637, 261);
-	textStory.append(story);
-	storyScreen.add(textStory);
-	
-	JButton btnContinue = new JButton("Continue?");
-	btnContinue.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	card.show(frame.getContentPane(), "wagonShop");
-	}
-	});
-	btnContinue.setBounds(259, 327, 106, 23);
-	storyScreen.add(btnContinue);
-	
-	JPanel shopScreen = new JPanel();
-	frame.getContentPane().add(shopScreen, "shop");
-	shopScreen.setLayout(null);
-	
-	lblShop = new JLabel("...Shop");
-	lblShop.setFont(new Font("SWItalt", Font.PLAIN, 16));
-	lblShop.setBounds(10, 11, 368, 58);
-	shopScreen.add(lblShop);
-	
-	NumberFormat format = NumberFormat.getInstance();
-	   NumberFormatter mask = new NumberFormatter(format);
-	   mask.setValueClass(Integer.class);
-	   mask.setMinimum(0);
-	   mask.setMaximum(999);
-	   mask.setAllowsInvalid(false);
-	   mask.setCommitsOnValidEdit(true);
+		textStory.setColumns(10);
+		textStory.setBounds(10, 55, 637, 261);
+		textStory.append(story);
+		storyScreen.add(textStory);
+		
+		JButton btnContinue = new JButton("Continue?");
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// When the user continues then go to the wagon shop
+				card.show(frame.getContentPane(), "wagonShop");
+			}
+		});
+		btnContinue.setBounds(259, 327, 106, 23);
+		storyScreen.add(btnContinue);
+		
+		// Shop Screen
+		JPanel shopScreen = new JPanel();
+		frame.getContentPane().add(shopScreen, "shop");
+		shopScreen.setLayout(null);
+		
+		lblShop = new JLabel("...Shop");
+		lblShop.setFont(new Font("SWItalt", Font.PLAIN, 16));
+		lblShop.setBounds(10, 11, 368, 58);
+		shopScreen.add(lblShop);
+		
+		// Set the format for all the text fields to only allow numbers from 0-999
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter mask = new NumberFormatter(format);
+		mask.setValueClass(Integer.class);
+		mask.setMinimum(0);
+		mask.setMaximum(999);
+		mask.setAllowsInvalid(false);
+		mask.setCommitsOnValidEdit(true);
 	   
-	txtFood = new JFormattedTextField(mask);
-	txtFood.setText("0");
-	txtFood.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtFood.setHorizontalAlignment(SwingConstants.CENTER);
-	txtFood.setBounds(500, 33, 43, 20);
-	shopScreen.add(txtFood);
+		txtFood = new JFormattedTextField(mask);
+		txtFood.setText("0");
+		txtFood.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				// Update the total when the user loses focus
+				getTotal();
+			}
+		});
+		txtFood.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFood.setBounds(500, 33, 43, 20);
+		shopScreen.add(txtFood);
 	
-	txtClothing = new JFormattedTextField(mask);
-	txtClothing.setText("0");
-	txtClothing.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtClothing.setHorizontalAlignment(SwingConstants.CENTER);
-	txtClothing.setBounds(500, 64, 43, 20);
-	shopScreen.add(txtClothing);
+		txtClothing = new JFormattedTextField(mask);
+		txtClothing.setText("0");
+		txtClothing.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtClothing.setHorizontalAlignment(SwingConstants.CENTER);
+		txtClothing.setBounds(500, 64, 43, 20);
+		shopScreen.add(txtClothing);
 	
-	txtAmmo = new JFormattedTextField(mask);
-	txtAmmo.setText("0");
-	txtAmmo.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtAmmo.setHorizontalAlignment(SwingConstants.CENTER);
-	txtAmmo.setBounds(500, 95, 43, 20);
-	shopScreen.add(txtAmmo);
+		txtAmmo = new JFormattedTextField(mask);
+		txtAmmo.setText("0");
+		txtAmmo.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtAmmo.setHorizontalAlignment(SwingConstants.CENTER);
+		txtAmmo.setBounds(500, 95, 43, 20);
+		shopScreen.add(txtAmmo);
 	
-	txtOxen = new JFormattedTextField(mask);
-	txtOxen.setText("0");
-	txtOxen.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtOxen.setHorizontalAlignment(SwingConstants.CENTER);
-	txtOxen.setBounds(500, 126, 43, 20);
-	shopScreen.add(txtOxen);
+		txtOxen = new JFormattedTextField(mask);
+		txtOxen.setText("0");
+		txtOxen.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtOxen.setHorizontalAlignment(SwingConstants.CENTER);
+		txtOxen.setBounds(500, 126, 43, 20);
+		shopScreen.add(txtOxen);
 	
-	txtWheel = new JFormattedTextField(mask);
-	txtWheel.setText("0");
-	txtWheel.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtWheel.setHorizontalAlignment(SwingConstants.CENTER);
-	txtWheel.setBounds(500, 157, 43, 20);
-	shopScreen.add(txtWheel);
+		txtWheel = new JFormattedTextField(mask);
+		txtWheel.setText("0");
+		txtWheel.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtWheel.setHorizontalAlignment(SwingConstants.CENTER);
+		txtWheel.setBounds(500, 157, 43, 20);
+		shopScreen.add(txtWheel);
 	
-	txtAxle = new JFormattedTextField(mask);
-	txtAxle.setText("0");
-	txtAxle.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtAxle.setHorizontalAlignment(SwingConstants.CENTER);
-	txtAxle.setBounds(500, 188, 43, 20);
-	shopScreen.add(txtAxle);
+		txtAxle = new JFormattedTextField(mask);
+		txtAxle.setText("0");
+		txtAxle.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtAxle.setHorizontalAlignment(SwingConstants.CENTER);
+		txtAxle.setBounds(500, 188, 43, 20);
+		shopScreen.add(txtAxle);
 	
-	txtTongue = new JFormattedTextField(mask);
-	txtTongue.setText("0");
-	txtTongue.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtTongue.setHorizontalAlignment(SwingConstants.CENTER);
-	txtTongue.setBounds(500, 219, 43, 20);
-	shopScreen.add(txtTongue);
+		txtTongue = new JFormattedTextField(mask);
+		txtTongue.setText("0");
+		txtTongue.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtTongue.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTongue.setBounds(500, 219, 43, 20);
+		shopScreen.add(txtTongue);
 	
-	txtMedBox = new JFormattedTextField(mask);
-	txtMedBox.setText("0");
-	txtMedBox.addFocusListener(new FocusAdapter() {
-	@Override
-	public void focusLost(FocusEvent e) {
-	getTotal();
-	}
-	});
-	txtMedBox.setHorizontalAlignment(SwingConstants.CENTER);
-	txtMedBox.setBounds(500, 250, 43, 20);
-	shopScreen.add(txtMedBox);
+		txtMedBox = new JFormattedTextField(mask);
+		txtMedBox.setText("0");
+		txtMedBox.addFocusListener(new FocusAdapter() {
+		@Override
+			public void focusLost(FocusEvent e) {
+				getTotal();
+			}
+		});
+		txtMedBox.setHorizontalAlignment(SwingConstants.CENTER);
+		txtMedBox.setBounds(500, 250, 43, 20);
+		shopScreen.add(txtMedBox);
 	
-	moneyFood = new JLabel("x $");
-	moneyFood.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyFood.setBounds(553, 36, 67, 14);
-	shopScreen.add(moneyFood);
+		moneyFood = new JLabel("x $");
+		moneyFood.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyFood.setBounds(553, 36, 67, 14);
+		shopScreen.add(moneyFood);
+		
+		moneyClothing = new JLabel("x $");
+		moneyClothing.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyClothing.setBounds(553, 67, 67, 14);
+		shopScreen.add(moneyClothing);
+		
+		moneyAmmo = new JLabel("x $");
+		moneyAmmo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyAmmo.setBounds(553, 98, 67, 14);
+		shopScreen.add(moneyAmmo);
+		
+		moneyOxen = new JLabel("x $");
+		moneyOxen.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyOxen.setBounds(553, 129, 67, 14);
+		shopScreen.add(moneyOxen);
+		
+		moneyWheel = new JLabel("x $");
+		moneyWheel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyWheel.setBounds(553, 160, 67, 14);
+		shopScreen.add(moneyWheel);
+		
+		moneyAxle = new JLabel("x $");
+		moneyAxle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyAxle.setBounds(553, 191, 67, 14);
+		shopScreen.add(moneyAxle);
+		
+		moneyTongue = new JLabel("x $");
+		moneyTongue.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyTongue.setBounds(553, 222, 67, 14);
+		shopScreen.add(moneyTongue);
+		
+		moneyMedBox = new JLabel("x $");
+		moneyMedBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		moneyMedBox.setBounds(553, 251, 67, 14);
+		shopScreen.add(moneyMedBox);
+		
+		JLabel infoTotal = new JLabel("Total:  ");
+		infoTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
+		infoTotal.setBounds(428, 303, 47, 34);
+		shopScreen.add(infoTotal);
+		
+		moneyTotal = new JLabel("$0");
+		moneyTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
+		moneyTotal.setBounds(476, 303, 67, 34);
+		shopScreen.add(moneyTotal);
+		
+		JLabel infoMoney = new JLabel("Money Left:  ");
+		infoMoney.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoMoney.setFont(new Font("Tahoma", Font.BOLD, 12));
+		infoMoney.setBounds(261, 303, 89, 34);
+		shopScreen.add(infoMoney);
+		
+		moneyLeft = new JLabel("$");
+		moneyLeft.setFont(new Font("Tahoma", Font.BOLD, 12));
+		moneyLeft.setBounds(351, 303, 67, 34);
+		shopScreen.add(moneyLeft);
+		
+		JLabel infoFood = new JLabel("Box of Food:");
+		infoFood.setToolTipText("5 pound of Food per box. Perfect for your daily nutrious meals on the trail");
+		infoFood.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoFood.setBounds(370, 35, 120, 20);
+		shopScreen.add(infoFood);
+		
+		JLabel infoClothing = new JLabel("Sets of Clothing:");
+		infoClothing.setToolTipText("Perfect for winter weather");
+		infoClothing.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoClothing.setBounds(388, 64, 102, 20);
+		shopScreen.add(infoClothing);
+		
+		JLabel infoAmmo = new JLabel("Boxes of Ammo:");
+		infoAmmo.setToolTipText("20 bullets per box");
+		infoAmmo.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoAmmo.setBounds(388, 98, 102, 20);
+		shopScreen.add(infoAmmo);
+		
+		JLabel infoOxen = new JLabel("Yokes of Oxen:");
+		infoOxen.setToolTipText("2 Oxen per Yoke");
+		infoOxen.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoOxen.setBounds(388, 129, 102, 20);
+		shopScreen.add(infoOxen);
+		
+		JLabel infoWheel = new JLabel("Number of Wheels:");
+		infoWheel.setToolTipText("Use to fix the wheel on your wagon.");
+		infoWheel.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoWheel.setBounds(351, 160, 139, 20);
+		shopScreen.add(infoWheel);
+		
+		JLabel infoAxle = new JLabel("Number of Axles:");
+		infoAxle.setToolTipText("Use to fix the axle on your wagon.");
+		infoAxle.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoAxle.setBounds(370, 191, 120, 20);
+		shopScreen.add(infoAxle);
+		
+		JLabel infoTongue = new JLabel("Number of Tongues:");
+		infoTongue.setToolTipText("Use to fix the tongue on your wagon.");
+		infoTongue.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoTongue.setBounds(370, 222, 120, 20);
+		shopScreen.add(infoTongue);
+		
+		JLabel infoMedBox = new JLabel("Number of MedBoxes:");
+		infoMedBox.setToolTipText("Use these if somebody sustains an injury on your journey");
+		infoMedBox.setHorizontalAlignment(SwingConstants.RIGHT);
+		infoMedBox.setBounds(351, 253, 139, 20);
+		shopScreen.add(infoMedBox);
+		
+		JLabel infoNotEnoughFunds = new JLabel("");
+		infoNotEnoughFunds.setForeground(Color.RED);
+		infoNotEnoughFunds.setHorizontalAlignment(SwingConstants.CENTER);
+		infoNotEnoughFunds.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		infoNotEnoughFunds.setBounds(261, 333, 282, 34);
+		shopScreen.add(infoNotEnoughFunds);
 	
-	moneyClothing = new JLabel("x $");
-	moneyClothing.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyClothing.setBounds(553, 67, 67, 14);
-	shopScreen.add(moneyClothing);
+		JButton btnBuy = new JButton("Buy");
+		btnBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Try to spend the money if it isn't able to then issue a warning
+				if(!supply.spendMoney(getTotal())) {
+					infoNotEnoughFunds.setText("Insufficient Funds to Purchase Items");
+				} else {
+					// Remove the warning
+					infoNotEnoughFunds.setText(null);
+					// Add the supplies
+					supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")) * 5);
+					supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")));
+					supply.addClothing(Integer.parseInt(txtClothing.getText().replaceAll(" ", "")));
+					supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")));
+					supply.addWheel(Integer.parseInt(txtWheel.getText().replaceAll(" ", "")));
+					supply.addAxle(Integer.parseInt(txtAxle.getText().replaceAll(" ", "")));
+					supply.addTongue(Integer.parseInt(txtTongue.getText().replaceAll(" ", "")));
+					supply.addMedBox(Integer.parseInt(txtMedBox.getText().replaceAll(" ", "")));
 	
-	moneyAmmo = new JLabel("x $");
-	moneyAmmo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyAmmo.setBounds(553, 98, 67, 14);
-	shopScreen.add(moneyAmmo);
+					// Go to the main screen
+					updateStats();
+					mainText.append("You have decided to set off on your journey.\n");
+					checkLocation();
+					card.show(frame.getContentPane(), "mainScreen");
+				}
+			}
+		});
 	
-	moneyOxen = new JLabel("x $");
-	moneyOxen.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyOxen.setBounds(553, 129, 67, 14);
-	shopScreen.add(moneyOxen);
-	
-	moneyWheel = new JLabel("x $");
-	moneyWheel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyWheel.setBounds(553, 160, 67, 14);
-	shopScreen.add(moneyWheel);
-	
-	moneyAxle = new JLabel("x $");
-	moneyAxle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyAxle.setBounds(553, 191, 67, 14);
-	shopScreen.add(moneyAxle);
-	
-	moneyTongue = new JLabel("x $");
-	moneyTongue.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyTongue.setBounds(553, 222, 67, 14);
-	shopScreen.add(moneyTongue);
-	
-	moneyMedBox = new JLabel("x $");
-	moneyMedBox.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	moneyMedBox.setBounds(553, 251, 67, 14);
-	shopScreen.add(moneyMedBox);
-	
-	JLabel infoTotal = new JLabel("Total:  ");
-	infoTotal.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
-	infoTotal.setBounds(428, 303, 47, 34);
-	shopScreen.add(infoTotal);
-	
-	moneyTotal = new JLabel("$0");
-	moneyTotal.setFont(new Font("Tahoma", Font.BOLD, 12));
-	moneyTotal.setBounds(476, 303, 67, 34);
-	shopScreen.add(moneyTotal);
-	
-	JLabel infoMoney = new JLabel("Money Left:  ");
-	infoMoney.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoMoney.setFont(new Font("Tahoma", Font.BOLD, 12));
-	infoMoney.setBounds(261, 303, 89, 34);
-	shopScreen.add(infoMoney);
-	
-	moneyLeft = new JLabel("$");
-	moneyLeft.setFont(new Font("Tahoma", Font.BOLD, 12));
-	moneyLeft.setBounds(351, 303, 67, 34);
-	shopScreen.add(moneyLeft);
-	
-	JLabel infoFood = new JLabel("Box of Food:");
-	infoFood.setToolTipText("5 pound of Food per box. Perfect for your daily nutrious meals on the trail");
-	infoFood.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoFood.setBounds(370, 35, 120, 20);
-	shopScreen.add(infoFood);
-	
-	JLabel infoClothing = new JLabel("Sets of Clothing:");
-	infoClothing.setToolTipText("Perfect for winter weather");
-	infoClothing.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoClothing.setBounds(388, 64, 102, 20);
-	shopScreen.add(infoClothing);
-	
-	JLabel infoAmmo = new JLabel("Boxes of Ammo:");
-	infoAmmo.setToolTipText("20 bullets per box");
-	infoAmmo.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoAmmo.setBounds(388, 98, 102, 20);
-	shopScreen.add(infoAmmo);
-	
-	JLabel infoOxen = new JLabel("Yokes of Oxen:");
-	infoOxen.setToolTipText("2 Oxen per Yoke");
-	infoOxen.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoOxen.setBounds(388, 129, 102, 20);
-	shopScreen.add(infoOxen);
-	
-	JLabel infoWheel = new JLabel("Number of Wheels:");
-	infoWheel.setToolTipText("Use to fix the wheel on your wagon.");
-	infoWheel.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoWheel.setBounds(351, 160, 139, 20);
-	shopScreen.add(infoWheel);
-	
-	JLabel infoAxle = new JLabel("Number of Axles:");
-	infoAxle.setToolTipText("Use to fix the axle on your wagon.");
-	infoAxle.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoAxle.setBounds(370, 191, 120, 20);
-	shopScreen.add(infoAxle);
-	
-	JLabel infoTongue = new JLabel("Number of Tongues:");
-	infoTongue.setToolTipText("Use to fix the tongue on your wagon.");
-	infoTongue.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoTongue.setBounds(370, 222, 120, 20);
-	shopScreen.add(infoTongue);
-	
-	JLabel infoMedBox = new JLabel("Number of MedBoxes:");
-	infoMedBox.setToolTipText("Use these if somebody sustains an injury on your journey");
-	infoMedBox.setHorizontalAlignment(SwingConstants.RIGHT);
-	infoMedBox.setBounds(351, 253, 139, 20);
-	shopScreen.add(infoMedBox);
-	
-	JLabel infoNotEnoughFunds = new JLabel("");
-	infoNotEnoughFunds.setForeground(Color.RED);
-	infoNotEnoughFunds.setHorizontalAlignment(SwingConstants.CENTER);
-	infoNotEnoughFunds.setFont(new Font("Tahoma", Font.PLAIN, 11));
-	infoNotEnoughFunds.setBounds(261, 333, 282, 34);
-	shopScreen.add(infoNotEnoughFunds);
-	
-	JButton btnBuy = new JButton("Buy");
-	btnBuy.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	// Try to spend the money if it isn't able to then issue a warning
-	if(!supply.spendMoney(getTotal())) {
-	infoNotEnoughFunds.setText("Insufficient Funds to Purchase Items");
-	} else {
-	// Remove the warning
-	infoNotEnoughFunds.setText(null);
-	// Add the supplies
-	supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")) * 5);
-	supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")));
-	supply.addClothing(Integer.parseInt(txtClothing.getText().replaceAll(" ", "")));
-	supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")));
-	supply.addWheel(Integer.parseInt(txtWheel.getText().replaceAll(" ", "")));
-	supply.addAxle(Integer.parseInt(txtAxle.getText().replaceAll(" ", "")));
-	supply.addTongue(Integer.parseInt(txtTongue.getText().replaceAll(" ", "")));
-	supply.addMedBox(Integer.parseInt(txtMedBox.getText().replaceAll(" ", "")));
-	
-	// Go to the main screen
-	updateStats();
-	mainText.append("You have decided to set off on your journey.\n");
-	checkLocation();
-	card.show(frame.getContentPane(), "mainScreen");
-	}
-	}
-	});
-	
-	btnBuy.setFont(new Font("Tahoma", Font.BOLD, 14));
-	btnBuy.setBounds(553, 290, 89, 58);
-	shopScreen.add(btnBuy);
-	
-	wagonShopScreen = new JPanel();
-	frame.getContentPane().add(wagonShopScreen, "wagonShop");
-	wagonShopScreen.setLayout(null);
-	
-	JLabel lblWagonShop = new JLabel("Hiram Young's Wagon Shop");
-	lblWagonShop.setHorizontalAlignment(SwingConstants.CENTER);
-	lblWagonShop.setFont(new Font("SWItalt", Font.PLAIN, 26));
-	lblWagonShop.setBounds(10, 11, 637, 49);
-	wagonShopScreen.add(lblWagonShop);
-	
-	JLabel lblCoveredWagon = new JLabel("");
-	lblCoveredWagon.setHorizontalAlignment(SwingConstants.CENTER);
-	Image covImg = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
-	lblCoveredWagon.setIcon(new ImageIcon(covImg));
-	lblCoveredWagon.setBounds(20, 71, 185, 120);
-	wagonShopScreen.add(lblCoveredWagon);
-	
-	JLabel lblRadio = new JLabel("");
-	lblRadio.setHorizontalAlignment(SwingConstants.CENTER);
-	Image radioImg = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(210, 120, Image.SCALE_SMOOTH);
-	lblRadio.setIcon(new ImageIcon(radioImg));
-	lblRadio.setBounds(215, 71, 210, 120);
-	wagonShopScreen.add(lblRadio);
-	
-	JLabel lblFancy = new JLabel("");
-	Image fancyImg = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
-	lblFancy.setIcon(new ImageIcon(fancyImg));
-	lblFancy.setBounds(435, 71, 185, 120);
-	wagonShopScreen.add(lblFancy);
-	
-	JLabel moneyCovWagon = new JLabel("$100");
-	moneyCovWagon.setFont(new Font("Tahoma", Font.BOLD, 14));
-	moneyCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
-	moneyCovWagon.setBounds(10, 202, 195, 23);
-	wagonShopScreen.add(moneyCovWagon);
-	
-	JLabel moneyRadioFlyer = new JLabel("$200");
-	moneyRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
-	moneyRadioFlyer.setFont(new Font("Tahoma", Font.BOLD, 14));
-	moneyRadioFlyer.setBounds(215, 202, 210, 23);
-	wagonShopScreen.add(moneyRadioFlyer);
-	
-	JLabel moneyFancyCar = new JLabel("$400");
-	moneyFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
-	moneyFancyCar.setFont(new Font("Tahoma", Font.BOLD, 14));
-	moneyFancyCar.setBounds(435, 202, 185, 23);
-	wagonShopScreen.add(moneyFancyCar);
-	
-	JLabel infoCovWagon = new JLabel("Covered Wagon");
-	infoCovWagon.setToolTipText("A wagon that is covered for all your trailing needs.");
-	infoCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
-	infoCovWagon.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	infoCovWagon.setBounds(20, 225, 185, 23);
-	wagonShopScreen.add(infoCovWagon);
-	
-	JLabel infoRadioFlyer = new JLabel("Radio Flyer Wagon");
-	infoRadioFlyer.setToolTipText("A bright red wagon that will allow you travel to your destination with ease.");
-	infoRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
-	infoRadioFlyer.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	infoRadioFlyer.setBounds(215, 225, 210, 23);
-	wagonShopScreen.add(infoRadioFlyer);
-	
-	JLabel infoFancyCar = new JLabel("Fancy Carriage");
-	infoFancyCar.setToolTipText("A beautiful carriage to take you to your destination in style.");
-	infoFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
-	infoFancyCar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	infoFancyCar.setBounds(435, 225, 185, 23);
-	wagonShopScreen.add(infoFancyCar);
-	
-	JRadioButton btnCovWag = new JRadioButton("");
-	btnCovWag.setSelected(true);
-	buttonGroup.add(btnCovWag);
-	btnCovWag.setBounds(100, 255, 36, 23);
-	wagonShopScreen.add(btnCovWag);
-	
-	JRadioButton btnRadioFlyer = new JRadioButton("");
-	buttonGroup.add(btnRadioFlyer);
-	btnRadioFlyer.setBounds(308, 255, 36, 23);
-	wagonShopScreen.add(btnRadioFlyer);
-	
-	JRadioButton btnFancyCar = new JRadioButton("");
-	buttonGroup.add(btnFancyCar);
-	btnFancyCar.setBounds(515, 255, 36, 23);
-	wagonShopScreen.add(btnFancyCar);
+		btnBuy.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnBuy.setBounds(553, 290, 89, 58);
+		shopScreen.add(btnBuy);
+		
+		wagonShopScreen = new JPanel();
+		frame.getContentPane().add(wagonShopScreen, "wagonShop");
+		wagonShopScreen.setLayout(null);
+		
+		JLabel lblWagonShop = new JLabel("Hiram Young's Wagon Shop");
+		lblWagonShop.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWagonShop.setFont(new Font("SWItalt", Font.PLAIN, 26));
+		lblWagonShop.setBounds(10, 11, 637, 49);
+		wagonShopScreen.add(lblWagonShop);
+		
+		JLabel lblCoveredWagon = new JLabel("");
+		lblCoveredWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		Image covImg = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
+		lblCoveredWagon.setIcon(new ImageIcon(covImg));
+		lblCoveredWagon.setBounds(20, 71, 185, 120);
+		wagonShopScreen.add(lblCoveredWagon);
+		
+		JLabel lblRadio = new JLabel("");
+		lblRadio.setHorizontalAlignment(SwingConstants.CENTER);
+		Image radioImg = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(210, 120, Image.SCALE_SMOOTH);
+		lblRadio.setIcon(new ImageIcon(radioImg));
+		lblRadio.setBounds(215, 71, 210, 120);
+		wagonShopScreen.add(lblRadio);
+		
+		JLabel lblFancy = new JLabel("");
+		Image fancyImg = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(185, 120, Image.SCALE_SMOOTH);
+		lblFancy.setIcon(new ImageIcon(fancyImg));
+		lblFancy.setBounds(435, 71, 185, 120);
+		wagonShopScreen.add(lblFancy);
+		
+		JLabel moneyCovWagon = new JLabel("$100");
+		moneyCovWagon.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyCovWagon.setBounds(10, 202, 195, 23);
+		wagonShopScreen.add(moneyCovWagon);
+		
+		JLabel moneyRadioFlyer = new JLabel("$200");
+		moneyRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyRadioFlyer.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyRadioFlyer.setBounds(215, 202, 210, 23);
+		wagonShopScreen.add(moneyRadioFlyer);
+		
+		JLabel moneyFancyCar = new JLabel("$400");
+		moneyFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
+		moneyFancyCar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		moneyFancyCar.setBounds(435, 202, 185, 23);
+		wagonShopScreen.add(moneyFancyCar);
+		
+		JLabel infoCovWagon = new JLabel("Covered Wagon");
+		infoCovWagon.setToolTipText("A wagon that is covered for all your trailing needs.");
+		infoCovWagon.setHorizontalAlignment(SwingConstants.CENTER);
+		infoCovWagon.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoCovWagon.setBounds(20, 225, 185, 23);
+		wagonShopScreen.add(infoCovWagon);
+		
+		JLabel infoRadioFlyer = new JLabel("Radio Flyer Wagon");
+		infoRadioFlyer.setToolTipText("A bright red wagon that will allow you travel to your destination with ease.");
+		infoRadioFlyer.setHorizontalAlignment(SwingConstants.CENTER);
+		infoRadioFlyer.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoRadioFlyer.setBounds(215, 225, 210, 23);
+		wagonShopScreen.add(infoRadioFlyer);
+		
+		JLabel infoFancyCar = new JLabel("Fancy Carriage");
+		infoFancyCar.setToolTipText("A beautiful carriage to take you to your destination in style.");
+		infoFancyCar.setHorizontalAlignment(SwingConstants.CENTER);
+		infoFancyCar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		infoFancyCar.setBounds(435, 225, 185, 23);
+		wagonShopScreen.add(infoFancyCar);
+		
+		JRadioButton btnCovWag = new JRadioButton("");
+		btnCovWag.setSelected(true);
+		buttonGroup.add(btnCovWag);
+		btnCovWag.setBounds(100, 255, 36, 23);
+		wagonShopScreen.add(btnCovWag);
+		
+		JRadioButton btnRadioFlyer = new JRadioButton("");
+		buttonGroup.add(btnRadioFlyer);
+		btnRadioFlyer.setBounds(308, 255, 36, 23);
+		wagonShopScreen.add(btnRadioFlyer);
+		
+		JRadioButton btnFancyCar = new JRadioButton("");
+		buttonGroup.add(btnFancyCar);
+		btnFancyCar.setBounds(515, 255, 36, 23);
+		wagonShopScreen.add(btnFancyCar);
 	
 	
 	JButton btnWagonBuy = new JButton("Buy");
