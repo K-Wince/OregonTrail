@@ -20,7 +20,7 @@ public class rndEvents  {
 	private final int x = 170;
 	
 	
-	public rndEvents(Supplies s) {
+	public rndEvents(Supplies s, Person P) {
 		
 		Random rand = new Random();
 		event = rand.nextInt(odds);
