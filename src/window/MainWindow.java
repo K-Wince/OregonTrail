@@ -681,10 +681,16 @@ public class MainWindow {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 				// Go to the next day
 				nextDay();
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 				nextDay(supply);
@@ -873,8 +879,11 @@ public class MainWindow {
 	}
 	
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	public void nextDay(Supplies supplies) {
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 	/**
 	 * nextDay Method - increases the day by one 
@@ -883,6 +892,9 @@ public class MainWindow {
 =======
 	public void nextDay(Supplies supplies) {
 >>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		day++;                    // Increase the Day count
 		supply.eatFood(portion);
@@ -956,8 +968,11 @@ public class MainWindow {
 			btnNext.setEnabled(false);   // End the game
 		}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		checkLoss(); //checks for a loss
 =======
+=======
+>>>>>>> Stashed changes
 <<<<<<< HEAD
 		// If they reach 0 on any of these items then end the game
 		if(supply.getPeople() == 0 || dayWithoutFood == 3) {
@@ -967,6 +982,9 @@ public class MainWindow {
 =======
 		checkLoss(); //checks for a loss
 >>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	}
 	
@@ -990,6 +1008,11 @@ public class MainWindow {
 		}
 		
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 =======
 <<<<<<< HEAD
 =======
@@ -1007,6 +1030,10 @@ public class MainWindow {
 		
 		
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
+>>>>>>> Stashed changes
 =======
 >>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
 >>>>>>> Stashed changes
