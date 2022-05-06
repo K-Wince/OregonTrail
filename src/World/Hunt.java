@@ -1,7 +1,6 @@
 package World;
 
 import java.awt.EventQueue;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -108,17 +107,15 @@ public class Hunt{
 		frmOregonTrail.getContentPane().setLayout(null);
 		
 		
-		JButton buttonDuck = new JButton("");
-		Image duckImg = new ImageIcon(Hunt.class.getResource("/pictures/duck.jpg")).getImage().getScaledInstance(101, 51, Image.SCALE_SMOOTH);
-		buttonDuck.setIcon(new ImageIcon(duckImg));
+		JButton buttonDuck = new JButton("Duck");
+		buttonDuck.setIcon(new ImageIcon(Hunt.class.getResource("/Pictures/duck.jpg")));
 		buttonDuck.setBounds(48, 43, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDuck);
 		
 
 		
-		JButton buttonDeer = new JButton("");
-		Image deerImg = new ImageIcon(Hunt.class.getResource("/pictures/deer.jpg")).getImage().getScaledInstance(101, 51, Image.SCALE_SMOOTH);
-		buttonDeer.setIcon(new ImageIcon(deerImg));
+		JButton buttonDeer = new JButton("Deer");
+		buttonDeer.setIcon(new ImageIcon(Hunt.class.getResource("/Pictures/deer.jpg")));
 		buttonDeer.setBounds(295, 168, 101, 51);
 		frmOregonTrail.getContentPane().add(buttonDeer);
 		
@@ -180,3 +177,4 @@ public class Hunt{
 	
 	}
 }
+

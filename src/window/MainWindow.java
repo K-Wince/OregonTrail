@@ -83,7 +83,7 @@ public class MainWindow {
 	private int milesTraveled = 0;
 	private int pace = 10;
 	private int portion = 10;
-	private String[] landMarks = {
+	private final String[] landMarks = {
 			"Independence, Missouri", 
 			"Kansas River Crossing",
 			"Fort Kearney",
@@ -100,7 +100,8 @@ public class MainWindow {
 			"The Dalles",
 			"Willamete Valley"
 	};
-	private Integer[] distance = {102, 201, 250, 86, 190, 227, 162, 58, 182, 113, 160, 55, 120, 100, -99};
+	private final Integer[] distance = {102, 201, 250, 86, 190, 227, 162, 58, 
+			182, 113, 160, 55, 120, 100, -99};
 	private int location = 0;
 	private Image wagonImage = null;
 	private int dayWithoutFood = 0;
@@ -108,14 +109,14 @@ public class MainWindow {
 	
 	// Cost of Items
 	private int rate = 1;
-	private int foodCost = 1;
-	private int clothingCost = 5;
-	private int ammoCost = 2;
-	private int oxenCost = 20;
-	private int wheelCost = 10;
-	private int axleCost = 10;
-	private int tongueCost = 10;
-	private int medCost = 25;
+	private final int foodCost = 1;
+	private final int clothingCost = 5;
+	private final int ammoCost = 2;
+	private final int oxenCost = 20;
+	private final int wheelCost = 10;
+	private final int axleCost = 10;
+	private final int tongueCost = 10;
+	private final int medCost = 25;
 	
 	
 	
@@ -680,28 +681,9 @@ public class MainWindow {
 		btnNext = new JButton("Next Day");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-<<<<<<< HEAD
 				// Go to the next day
 				nextDay();
-=======
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-				nextDay(supply);
 				updateStats();
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
 				checkLocation();
 				updateStats();
 			}
@@ -884,37 +866,17 @@ public class MainWindow {
 		moneyMedBox.setText("X $" + (medCost * rate));
 	}
 	
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	public void nextDay(Supplies supplies) {
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-<<<<<<< HEAD
 	/**
 	 * nextDay Method - increases the day by one 
 	 */
 	public void nextDay() {
-=======
-	public void nextDay(Supplies supplies) {
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 		day++;                    // Increase the Day count
 		supply.eatFood(portion);
 		rndEvents event = new rndEvents(supply); //create new random event 	
 		mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
 		if(Injured == true && event.getInjury() == true){  //checks if there was already an injury
 			mainText.append("Another member lost their life due to injuries"); //show user
-			people -= 1; //remove a person
+			supply.killPerson(); //remove a person
 		}
 		else {Injured = event.getInjury();}
 		// Remove the food eaten in a day
@@ -962,16 +924,19 @@ public class MainWindow {
 		
 		// If it is not at the final location and its traveled the full distance
 		if(milesLeft == 0 && location != 13) {
+			
 			if (location % 2 == 1) {         // If they are at a fort stop, then enable shop
 				btnShop.setEnabled(true);
 				lblShop.setText(landMarks[location] + " Shop");
 			}
+			
 			milesTraveled = 0;
 			location++;                      // Increase the Location
 			milesLeft = distance[location];  // Reset Miles Counter
 			mainText.append(                 // Let the player know where they are
 					"You are in " + landMarks[location] + ". You have "
 					+ milesLeft + " miles until the next landmark.\n");
+			
 		} else if (milesLeft == 0) {         // If it is at the final location
 			location++;                      // Increase the Location
 			mainText.append(                  // Let the user know they are in Nebraska
@@ -979,31 +944,8 @@ public class MainWindow {
 				". You have made it to Oregon. Congratulations!\n");
 			btnNext.setEnabled(false);   // End the game
 		}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+		
 		checkLoss(); //checks for a loss
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-<<<<<<< HEAD
-		// If they reach 0 on any of these items then end the game
-		if(supply.getPeople() == 0 || dayWithoutFood == 3) {
-			btnNext.setEnabled(false);
-			mainText.append("You did not make it to Oregon.\n");
-		}
-=======
-		checkLoss(); //checks for a loss
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	}
 	
 	/**
@@ -1025,21 +967,6 @@ public class MainWindow {
 		case 2: infoHealth.setText("Bad"); break;
 		}
 		
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 		if(Injured){
 			if(supply.getMedBox()>=1) {
 				mainText.append("You were injured and used a Medbox");
@@ -1050,20 +977,6 @@ public class MainWindow {
 			}
 		}
 		
-		
-		
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
->>>>>>> Stashed changes
-=======
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
->>>>>>> Stashed changes
-=======
->>>>>>> df2b9446fefa73592a38b80e8efb1f544067c71c
->>>>>>> Stashed changes
 		// Print out the day and miles traveled
 		mainText.append("Day " + day + ":\n");
 		mainText.append("You traveled " + pace + " miles.\n");
@@ -1077,13 +990,10 @@ public class MainWindow {
 	
 	public void checkLoss() {
 		// If they reach 0 on any of these items then end the game
-				if(people == 0 || dayWithoutFood == 3) {
+				if(supply.getPeople() == 0 || dayWithoutFood == 3) {
 					btnNext.setEnabled(false);
 					mainText.append("You did not make it to Oregon.\n");
 				}
 			
 	}
-	
-	
-	
 }

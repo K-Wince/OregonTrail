@@ -143,6 +143,12 @@ public class Supplies {
 		}
 	}
 	
+	public void killPerson() {
+		if (people != 0) {
+			people--;
+		}
+	}
+	
 	// Add Supplies
 	public void addMoney(int n) {
 		money += n;
