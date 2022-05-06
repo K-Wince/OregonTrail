@@ -621,370 +621,368 @@ public class MainWindow {
 		wagonShopScreen.add(btnFancyCar);
 	
 	
-	JButton btnWagonBuy = new JButton("Buy");
-	btnWagonBuy.setBounds(276, 311, 89, 23);
-	wagonShopScreen.add(btnWagonBuy);
-	btnWagonBuy.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	if(btnCovWag.isSelected()) {
-	wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
-	supply.spendMoney(100);
-	} else if(btnRadioFlyer.isSelected()) {
-	wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
-	supply.spendMoney(200);
-	} else if(btnFancyCar.isSelected()) {
-	wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
-	supply.spendMoney(400);
-	}
+		JButton btnWagonBuy = new JButton("Buy");
+		btnWagonBuy.setBounds(276, 311, 89, 23);
+		wagonShopScreen.add(btnWagonBuy);
+		btnWagonBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(btnCovWag.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(100);
+				} else if(btnRadioFlyer.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/radioFlyer.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(200);
+				} else if(btnFancyCar.isSelected()) {
+					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
+					supply.spendMoney(400);
+				}
+		
+				lblWagon.setIcon(new ImageIcon(wagonImage));
+		
+				moneyLeft.setText("$" + supply.getMoney());
+				setDollarAmount();
+			lblShop.setText(landMarks[location] + " Shop");
+			card.show(frame.getContentPane(), "shop");
+			}
+		});
 	
-	lblWagon.setIcon(new ImageIcon(wagonImage));
+		JLabel lblMoneyInfo = new JLabel("Money Left: $1200");
+		lblMoneyInfo.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMoneyInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblMoneyInfo.setBounds(109, 311, 157, 19);
+		wagonShopScreen.add(lblMoneyInfo);
 	
-	moneyLeft.setText("$" + supply.getMoney());
-	setDollarAmount();
-	lblShop.setText(landMarks[location] + " Shop");
-	card.show(frame.getContentPane(), "shop");
-	}
-	});
+		JPanel mainScreen = new JPanel();
+		frame.getContentPane().add(mainScreen, "mainScreen");
+		mainScreen.setLayout(null);
+		
+		JLabel lblGround = new JLabel("");
+		Image prairieImg = new ImageIcon(MainWindow.class.getResource("/pictures/prairie.jpg")).getImage().getScaledInstance(657, 150, Image.SCALE_SMOOTH);
+		
+		lblWagon = new JLabel("");
+		lblWagon.setBounds(592, 29, 65, 55);
+		mainScreen.add(lblWagon);
+		
+		JLabel lblPath = new JLabel("X   -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -");
+		lblPath.setForeground(Color.WHITE);
+		lblPath.setBounds(10, 44, 647, 29);
+		mainScreen.add(lblPath);
+		lblGround.setIcon(new ImageIcon(prairieImg));
+		lblGround.setBounds(0, 0, 657, 84);
+		mainScreen.add(lblGround);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 84, 400, 254);
+		mainScreen.add(scrollPane);
+		
+		mainText = new JTextArea();
+		mainText.setWrapStyleWord(true);
+		mainText.setLineWrap(true);
+		mainText.setBackground(Color.WHITE);
+		scrollPane.setViewportView(mainText);
+		mainText.setEditable(false);
 	
-	JLabel lblMoneyInfo = new JLabel("Money Left: $1200");
-	lblMoneyInfo.setHorizontalAlignment(SwingConstants.TRAILING);
-	lblMoneyInfo.setFont(new Font("Tahoma", Font.BOLD, 14));
-	lblMoneyInfo.setBounds(109, 311, 157, 19);
-	wagonShopScreen.add(lblMoneyInfo);
+		btnNext = new JButton("Next Day");
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nextDay(supply);
+				updateStats();
+				checkLocation();
+			}
+		});
+		btnNext.setBounds(162, 344, 89, 23);
+		mainScreen.add(btnNext);
 	
-	JPanel mainScreen = new JPanel();
-	frame.getContentPane().add(mainScreen, "mainScreen");
-	mainScreen.setLayout(null);
+		btnShop = new JButton("Shop");
+		btnShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				card.show(frame.getContentPane(), "shop");
+			}
+		});
+		btnShop.setEnabled(false);
+		btnShop.setBounds(438, 320, 89, 23);
+		mainScreen.add(btnShop);
+		
+		JButton btnSupplies = new JButton("Supplies");
+		btnSupplies.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				printSupplies();
+			}
+		});
+		btnSupplies.setBounds(438, 344, 184, 23);
+		mainScreen.add(btnSupplies);
 	
-	JLabel lblGround = new JLabel("");
-	Image prairieImg = new ImageIcon(MainWindow.class.getResource("/pictures/prairie.jpg")).getImage().getScaledInstance(657, 150, Image.SCALE_SMOOTH);
+		JLabel statMiles = new JLabel("Miles Left:");
+		statMiles.setHorizontalAlignment(SwingConstants.TRAILING);
+		statMiles.setBounds(438, 95, 89, 14);
+		mainScreen.add(statMiles);
+		
+		JLabel statFood = new JLabel("Pounds of Food:");
+		statFood.setHorizontalAlignment(SwingConstants.TRAILING);
+		statFood.setBounds(420, 120, 107, 14);
+		mainScreen.add(statFood);
+		
+		JLabel statHealth = new JLabel("Health:");
+		statHealth.setHorizontalAlignment(SwingConstants.TRAILING);
+		statHealth.setBounds(438, 145, 89, 14);
+		mainScreen.add(statHealth);
+		
+		JLabel statPace = new JLabel("Pace:");
+		statPace.setHorizontalAlignment(SwingConstants.CENTER);
+		statPace.setBounds(438, 197, 89, 14);
+		mainScreen.add(statPace);
+		
+		JLabel statPortion = new JLabel("Portions:");
+		statPortion.setHorizontalAlignment(SwingConstants.CENTER);
+		statPortion.setBounds(533, 197, 89, 14);
+		mainScreen.add(statPortion);
+		
+		JRadioButton rdbtnSlow = new JRadioButton("Slow");
+		rdbtnSlow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 5;
+			}
+		});
+		buttonGroup_1.add(rdbtnSlow);
+		rdbtnSlow.setBounds(448, 218, 79, 23);
+		mainScreen.add(rdbtnSlow);
 	
-	lblWagon = new JLabel("");
-	lblWagon.setBounds(592, 29, 65, 55);
-	mainScreen.add(lblWagon);
-	
-	JLabel lblPath = new JLabel("X   -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -    -");
-	lblPath.setForeground(Color.WHITE);
-	lblPath.setBounds(10, 44, 647, 29);
-	mainScreen.add(lblPath);
-	lblGround.setIcon(new ImageIcon(prairieImg));
-	lblGround.setBounds(0, 0, 657, 84);
-	mainScreen.add(lblGround);
-	
-	JScrollPane scrollPane = new JScrollPane();
-	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	scrollPane.setBounds(10, 84, 400, 254);
-	mainScreen.add(scrollPane);
-	
-	mainText = new JTextArea();
-	mainText.setWrapStyleWord(true);
-	mainText.setLineWrap(true);
-	mainText.setBackground(Color.WHITE);
-	scrollPane.setViewportView(mainText);
-	mainText.setEditable(false);
-	
-	btnNext = new JButton("Next Day");
-	btnNext.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	nextDay(supply);
-	updateStats();
-	checkLocation();
-	}
-	});
-	btnNext.setBounds(162, 344, 89, 23);
-	mainScreen.add(btnNext);
-	
-	btnShop = new JButton("Shop");
-	btnShop.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	card.show(frame.getContentPane(), "shop");
-	}
-	});
-	btnShop.setEnabled(false);
-	btnShop.setBounds(438, 320, 89, 23);
-	mainScreen.add(btnShop);
-	
-	JButton btnSupplies = new JButton("Supplies");
-	btnSupplies.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	printSupplies();
-	}
-	});
-	btnSupplies.setBounds(438, 344, 184, 23);
-	mainScreen.add(btnSupplies);
-	
-	JLabel statMiles = new JLabel("Miles Left:");
-	statMiles.setHorizontalAlignment(SwingConstants.TRAILING);
-	statMiles.setBounds(438, 95, 89, 14);
-	mainScreen.add(statMiles);
-	
-	JLabel statFood = new JLabel("Pounds of Food:");
-	statFood.setHorizontalAlignment(SwingConstants.TRAILING);
-	statFood.setBounds(420, 120, 107, 14);
-	mainScreen.add(statFood);
-	
-	JLabel statHealth = new JLabel("Health:");
-	statHealth.setHorizontalAlignment(SwingConstants.TRAILING);
-	statHealth.setBounds(438, 145, 89, 14);
-	mainScreen.add(statHealth);
-	
-	JLabel statPace = new JLabel("Pace:");
-	statPace.setHorizontalAlignment(SwingConstants.CENTER);
-	statPace.setBounds(438, 197, 89, 14);
-	mainScreen.add(statPace);
-	
-	JLabel statPortion = new JLabel("Portions:");
-	statPortion.setHorizontalAlignment(SwingConstants.CENTER);
-	statPortion.setBounds(533, 197, 89, 14);
-	mainScreen.add(statPortion);
-	
-	JRadioButton rdbtnSlow = new JRadioButton("Slow");
-	rdbtnSlow.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	pace = 5;
-	}
-	});
-	buttonGroup_1.add(rdbtnSlow);
-	rdbtnSlow.setBounds(448, 218, 79, 23);
-	mainScreen.add(rdbtnSlow);
-	
-	JRadioButton rdbtnSteady = new JRadioButton("Steady");
-	rdbtnSteady.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	pace = 10;
-	}
-	});
-	rdbtnSteady.setSelected(true);
-	buttonGroup_1.add(rdbtnSteady);
-	rdbtnSteady.setBounds(448, 244, 79, 23);
-	mainScreen.add(rdbtnSteady);
-	
-	JRadioButton rdbtnGruelling = new JRadioButton("Gruelling");
-	rdbtnGruelling.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	pace = 15;
-	}
-	});
-	buttonGroup_1.add(rdbtnGruelling);
-	rdbtnGruelling.setBounds(448, 273, 79, 23);
-	mainScreen.add(rdbtnGruelling);
-	
-	JRadioButton rdbtnSkim = new JRadioButton("Skim");
-	rdbtnSkim.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	portion = 5;
-	}
-	});
-	buttonGroup_2.add(rdbtnSkim);
-	rdbtnSkim.setBounds(543, 218, 79, 23);
-	mainScreen.add(rdbtnSkim);
-	
-	JRadioButton rdbtnNormal = new JRadioButton("Normal");
-	rdbtnNormal.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	portion = 10;
-	}
-	});
-	rdbtnNormal.setSelected(true);
-	buttonGroup_2.add(rdbtnNormal);
-	rdbtnNormal.setBounds(543, 244, 79, 23);
-	mainScreen.add(rdbtnNormal);
-	
-	JRadioButton rdbtnFilling = new JRadioButton("Filling");
-	rdbtnFilling.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	portion = 15;
-	}
-	});
-	buttonGroup_2.add(rdbtnFilling);
-	rdbtnFilling.setBounds(543, 273, 79, 23);
-	mainScreen.add(rdbtnFilling);
-	
-	infoMiles = new JLabel("");
-	infoMiles.setFont(new Font("Tahoma", Font.BOLD, 11));
-	infoMiles.setBounds(533, 95, 89, 14);
-	mainScreen.add(infoMiles);
-	
-	infoLBFood = new JLabel("");
-	infoLBFood.setFont(new Font("Tahoma", Font.BOLD, 11));
-	infoLBFood.setBounds(533, 120, 89, 14);
-	mainScreen.add(infoLBFood);
-	
-	infoHealth = new JLabel("Good");
-	infoHealth.setFont(new Font("Tahoma", Font.BOLD, 11));
-	infoHealth.setBounds(533, 145, 89, 14);
-	mainScreen.add(infoHealth);
-	
-	JButton btnHunt = new JButton("Hunt");
-	btnHunt.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-	try {
-	Hunt window = new Hunt();
-	}
-	catch (Exception e1) {
-	e1.printStackTrace();
-	}
-	}
-	});
-	btnHunt.setBounds(533, 320, 89, 23);
-	mainScreen.add(btnHunt);
+		JRadioButton rdbtnSteady = new JRadioButton("Steady");
+		rdbtnSteady.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 10;
+			}
+		});
+		rdbtnSteady.setSelected(true);
+		buttonGroup_1.add(rdbtnSteady);
+		rdbtnSteady.setBounds(448, 244, 79, 23);
+		mainScreen.add(rdbtnSteady);
+		
+		JRadioButton rdbtnGruelling = new JRadioButton("Gruelling");
+		rdbtnGruelling.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pace = 15;
+			}
+		});
+		buttonGroup_1.add(rdbtnGruelling);
+		rdbtnGruelling.setBounds(448, 273, 79, 23);
+		mainScreen.add(rdbtnGruelling);
+		
+		JRadioButton rdbtnSkim = new JRadioButton("Skim");
+		rdbtnSkim.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		portion = 5;
+		}
+		});
+		buttonGroup_2.add(rdbtnSkim);
+		rdbtnSkim.setBounds(543, 218, 79, 23);
+		mainScreen.add(rdbtnSkim);
+		
+		JRadioButton rdbtnNormal = new JRadioButton("Normal");
+		rdbtnNormal.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		portion = 10;
+		}
+		});
+		rdbtnNormal.setSelected(true);
+		buttonGroup_2.add(rdbtnNormal);
+		rdbtnNormal.setBounds(543, 244, 79, 23);
+		mainScreen.add(rdbtnNormal);
+		
+		JRadioButton rdbtnFilling = new JRadioButton("Filling");
+		rdbtnFilling.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		portion = 15;
+		}
+		});
+		buttonGroup_2.add(rdbtnFilling);
+		rdbtnFilling.setBounds(543, 273, 79, 23);
+		mainScreen.add(rdbtnFilling);
+		
+		infoMiles = new JLabel("");
+		infoMiles.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoMiles.setBounds(533, 95, 89, 14);
+		mainScreen.add(infoMiles);
+		
+		infoLBFood = new JLabel("");
+		infoLBFood.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoLBFood.setBounds(533, 120, 89, 14);
+		mainScreen.add(infoLBFood);
+		
+		infoHealth = new JLabel("Good");
+		infoHealth.setFont(new Font("Tahoma", Font.BOLD, 11));
+		infoHealth.setBounds(533, 145, 89, 14);
+		mainScreen.add(infoHealth);
+		
+		JButton btnHunt = new JButton("Hunt");
+		btnHunt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Hunt window = new Hunt();
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnHunt.setBounds(533, 320, 89, 23);
+		mainScreen.add(btnHunt);
 	}
 	
 	public int getTotal() {
-	int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
-	+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
-	+ (Integer.parseInt(txtAmmo.getText().replaceAll(" ", ""))  * ammoCost * rate)
-	+ (Integer.parseInt(txtOxen.getText().replaceAll(" ", ""))  * oxenCost * rate)
-	+ ((Integer.parseInt(txtWheel.getText().replaceAll(" ", ""))  * wheelCost * rate))
-	+ ((Integer.parseInt(txtAxle.getText().replaceAll(" ", ""))  * axleCost * rate))
-	+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
-	+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
-	moneyTotal.setText("$" + total);
-	return total;
+		int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
+		+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
+		+ (Integer.parseInt(txtAmmo.getText().replaceAll(" ", ""))  * ammoCost * rate)
+		+ (Integer.parseInt(txtOxen.getText().replaceAll(" ", ""))  * oxenCost * rate)
+		+ ((Integer.parseInt(txtWheel.getText().replaceAll(" ", ""))  * wheelCost * rate))
+		+ ((Integer.parseInt(txtAxle.getText().replaceAll(" ", ""))  * axleCost * rate))
+		+ ((Integer.parseInt(txtTongue.getText().replaceAll(" ", ""))  * tongueCost * rate))
+		+ ((Integer.parseInt(txtMedBox.getText().replaceAll(" ", ""))  * medCost * rate));
+		moneyTotal.setText("$" + total);
+		return total;
 	}
 	
 	public void setDollarAmount () {
-	moneyFood.setText("X $" + (foodCost * rate));
-	moneyClothing.setText("X $" + (clothingCost * rate));
-	moneyAmmo.setText("X $" + (ammoCost * rate));
-	moneyOxen.setText("X $" + (oxenCost * rate));
-	moneyWheel.setText("X $" + (wheelCost * rate));
-	moneyAxle.setText("X $" + (axleCost * rate));
-	moneyTongue.setText("X $" + (tongueCost * rate));
-	moneyMedBox.setText("X $" + (medCost * rate));
+		moneyFood.setText("X $" + (foodCost * rate));
+		moneyClothing.setText("X $" + (clothingCost * rate));
+		moneyAmmo.setText("X $" + (ammoCost * rate));
+		moneyOxen.setText("X $" + (oxenCost * rate));
+		moneyWheel.setText("X $" + (wheelCost * rate));
+		moneyAxle.setText("X $" + (axleCost * rate));
+		moneyTongue.setText("X $" + (tongueCost * rate));
+		moneyMedBox.setText("X $" + (medCost * rate));
 	}
 	
 	public void nextDay(Supplies supplies) {
-	day++;                    // Increase the Day count
-	supply.eatFood(portion);
-	Person temp = new Person("Temp");
-	Random rand = new Random();
-	int x = rand.nextInt(5);
-	boolean cont = false;
-	do{
-	switch(x) {
-	case 0: temp = Ben; break;
-	case 1: temp = Jake; break;
-	case 2: temp = Hattie; break;
-	case 4: temp = Agusta; break;
-	case 5: temp = Charles; break;}
-	if(temp.checkDeath() == false) {cont = true; } //allows loop to move on if they are alive
-	}while(cont = false);
-	rndEvents event = new rndEvents(supply, temp); //create new random event
-	mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
-	checkInjury(temp);
-	switch(x) {
-	case 0: Ben = temp; break;
-	case 1: Jake = temp; break;
-	case 2: Hattie = temp; break;
-	case 4: Agusta = temp; break;
-	case 5: Charles = temp; break; }
-	{Injured = event.getInjury();}
-	// Remove the food eaten in a day
-	// If miles left are greater than pace
-	if(milesLeft > pace) {    
-	milesLeft = milesLeft - pace; // Remove the amount traveled in a day
-	milesTraveled += pace;
-	} else {                          // Else cap the milesLeft at 0
-	milesLeft = 0;  
-	}
+		day++;                    // Increase the Day count
+		supply.eatFood(portion);
+		Person temp = new Person("Temp");
+		Random rand = new Random();
+		int x = rand.nextInt(5);
+		boolean cont = false;
+		do{
+		switch(x) {
+		case 0: temp = Ben; break;
+		case 1: temp = Jake; break;
+		case 2: temp = Hattie; break;
+		case 4: temp = Agusta; break;
+		case 5: temp = Charles; break;}
+		if(temp.checkDeath() == false) {cont = true; } //allows loop to move on if they are alive
+		}while(cont = false);
+		rndEvents event = new rndEvents(supply, temp); //create new random event
+		mainText.append(event.PrintOutcome()+ "/n"); // print the outcome of the event
+		checkInjury(temp);
+		switch(x) {
+		case 0: Ben = temp; break;
+		case 1: Jake = temp; break;
+		case 2: Hattie = temp; break;
+		case 4: Agusta = temp; break;
+		case 5: Charles = temp; break; }
+		{Injured = event.getInjury();}
+		
+		// Remove the food eaten in a day
+		// If miles left are greater than pace
+		if(milesLeft > pace) {    
+			milesLeft = milesLeft - pace; // Remove the amount traveled in a day
+			milesTraveled += pace;
+		} else {                          // Else cap the milesLeft at 0
+			milesLeft = 0;  
+		}
 	}
 	
 	public void printSupplies() {
-	// Print all the supplies
-	mainText.append(          
-	"The supplies you have are: " +
-	supply.getFood() + " lbs of food, " +
-	supply.getClothing() + " sets of clothing, " +
-	supply.getAmmo() + " boxes of bullets, " +
-	supply.getOxen() + " oxen, " +
-	supply.getWheel() + " wheels, " +
-	supply.getAxle() + " axles, " +
-	supply.getTongue() + " tongues, and " +
-	supply.getMedBox() + " medboxes.\n"
-	
-	);
+		// Print all the supplies
+		mainText.append(          
+			"The supplies you have are: " +
+			supply.getFood() + " lbs of food, " +
+			supply.getClothing() + " sets of clothing, " +
+			supply.getAmmo() + " boxes of bullets, " +
+			supply.getOxen() + " oxen, " +
+			supply.getWheel() + " wheels, " +
+			supply.getAxle() + " axles, " +
+			supply.getTongue() + " tongues, and " +
+			supply.getMedBox() + " medboxes.\n"
+				);
 	}
 	
 	public void checkLocation() {
-	if(btnShop.isEnabled()) {
-	btnShop.setEnabled(false);
-	}
-	if (location == 0 && milesLeft == distance[0]) {
-	mainText.append("You are in " + landMarks[location] + ".\n");
-	}
-	// If it is not at the final location and its traveled the full distance
-	if(milesLeft == 0 && location != 13) {
-	if (location % 2 == 1) {
-	btnShop.setEnabled(true);
-	lblShop.setText(landMarks[location] + " Shop");
-	}
-	milesTraveled = 0;
-	location++;                      // Increase the Location
-	milesLeft = distance[location];  // Reset Miles Counter
-	mainText.append(                  // Let the player know where they are
-	"You are in " + landMarks[location] + ". You have "
-	+ milesLeft + " miles until the next landmark.\n");
-	} else if (milesLeft == 0) {         // If it is at the final location
-	location++;                      // Increase the Location
-	mainText.append(                  // Let the user know they are in Nebraska
-	"You are in " + landMarks[location] +
-	". You have made it to Oregon. Congratulations!\n");
-	btnNext.setEnabled(false);   // End the game
-	}
-	checkLoss(); //checks for a loss
+		if(btnShop.isEnabled()) {
+			btnShop.setEnabled(false);
+		}
+		if (location == 0 && milesLeft == distance[0]) {
+			mainText.append("You are in " + landMarks[location] + ".\n");
+		}
+		// If it is not at the final location and its traveled the full distance
+		if(milesLeft == 0 && location != 13) {
+			if (location % 2 == 1) {
+				btnShop.setEnabled(true);
+				lblShop.setText(landMarks[location] + " Shop");
+			}
+			milesTraveled = 0;
+			location++;                      // Increase the Location
+			milesLeft = distance[location];  // Reset Miles Counter
+			mainText.append(                  // Let the player know where they are
+					"You are in " + landMarks[location] + ". You have "
+					+ milesLeft + " miles until the next landmark.\n");
+		} else if (milesLeft == 0) {         // If it is at the final location
+			location++;                      // Increase the Location
+			mainText.append(                  // Let the user know they are in Nebraska
+					"You are in " + landMarks[location] +
+					". You have made it to Oregon. Congratulations!\n");
+			btnNext.setEnabled(false);   // End the game
+		}
+		checkLoss(); //checks for a loss
 	}
 	
 	public void updateStats() {
-	// If they have no food then increase the day counter
-	if (supply.getFood() == 0) {
-	dayWithoutFood++;
-	} else {
-	dayWithoutFood = 0;
-	}
-	// Determine the Health Readout of the wagon riders
-	switch(dayWithoutFood) {
-	case 0: infoHealth.setText("Good"); break;
-	case 1: infoHealth.setText("Starving"); break;
-	case 2: infoHealth.setText("Bad"); break;
-	}
+		// If they have no food then increase the day counter
+		if (supply.getFood() == 0) {
+			dayWithoutFood++;
+		} else {
+			dayWithoutFood = 0;
+		}
+		// Determine the Health Readout of the wagon riders
+		switch(dayWithoutFood) {
+		case 0: infoHealth.setText("Good"); break;
+		case 1: infoHealth.setText("Starving"); break;
+		case 2: infoHealth.setText("Bad"); break;
+		}
 	
-	// Print out the day and miles traveled
-	mainText.append("Day " + day + ":\n");
-	mainText.append("You traveled " + pace + " miles.\n");
-	// Update milesLeft and pounds of food
-	infoMiles.setText(milesLeft + "");
-	infoLBFood.setText(supply.getFood() + "");
-	// Update the wagon graphic
-	lblWagon.setLocation(592 - (int)(592.0 * ((double)milesTraveled/distance[location])),29);
+		// Print out the day and miles traveled
+		mainText.append("Day " + day + ":\n");
+		mainText.append("You traveled " + pace + " miles.\n");
+		// Update milesLeft and pounds of food
+		infoMiles.setText(milesLeft + "");
+		infoLBFood.setText(supply.getFood() + "");
+		// Update the wagon graphic
+		lblWagon.setLocation(592 - (int)(592.0 * ((double)milesTraveled/distance[location])),29);
 	}
 	
 	
 	public void checkLoss() {
-	// If they reach 0 on any of these items then end the game
+		// If they reach 0 on any of these items then end the game
 	
-	if(people == 0 || dayWithoutFood == 3 || supply.getOxen() == 0) {
-	if(supply.getOxen() == 0) {
-	mainText.append("You have run out of oxen.\n");
-	}
-	btnNext.setEnabled(false);
-	mainText.append("You did not make it to Oregon.\n");
-	}
-	
+		if(people == 0 || dayWithoutFood == 3 || supply.getOxen() == 0) {
+			if(supply.getOxen() == 0) {
+				mainText.append("You have run out of oxen.\n");
+			}
+			btnNext.setEnabled(false);
+			mainText.append("You did not make it to Oregon.\n");
+		}
 	}
 	
 	public void checkInjury(Person p) {
-	if(p.checkDeath()){
-	mainText.append(p.getName() + " has died");
-	people -= 1;
-	checkLoss();
-	}
-	if(supply.getMedBox()>=1) {
-	mainText.append(p.getName() + " was injured and used a Medbox");
-	supply.consumeMedBox();
-	
-	}
+		if(p.checkDeath()){
+			mainText.append(p.getName() + " has died");
+			people -= 1;
+			checkLoss();
+		}
+		if(supply.getMedBox()>=1) {
+			mainText.append(p.getName() + " was injured and used a Medbox");
+			supply.consumeMedBox();
+		}
 	}
 
 }
