@@ -35,9 +35,9 @@ else {return true;}
 
 public String checkHealth(){
 	String status;
-	if(health == 0) { status = name + " is dead";}
-	else if(health == 1) { status = name + " is dead";}
-	else { status = name + " is dead";}
+	if(health == 0) { status = name + " is dead ";}
+	else if(health == 1) { status = name + " is injured ";}
+	else { status = name + " is Healthy ";}
 	return status;
 }
 
