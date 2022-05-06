@@ -14,6 +14,7 @@ public class Supplies {
 	private int axle = 0;
 	private int tongue = 0;
 	private int medBox = 0;
+	private int people = 5;
 	
 	
 	// Getters 
@@ -52,6 +53,10 @@ public class Supplies {
 
 	public int getMedBox() {
 		return medBox;
+	}
+	
+	public int getPeople() {
+		return people;
 	}
 	
 	// Consume Supplies
@@ -137,8 +142,8 @@ public class Supplies {
 			return false;
 		}
 	}
-	// Add Supplies
 	
+	// Add Supplies
 	public void addMoney(int n) {
 		money += n;
 	}
