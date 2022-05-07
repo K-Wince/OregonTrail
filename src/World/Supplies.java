@@ -98,9 +98,9 @@ public class Supplies {
 		}
 	}
 	
-	public boolean consumeAmmo() {
+	public boolean consumeAmmo(int n) {
 		if (ammo != 0) {
-			ammo--;
+			ammo -= n;
 			return true;
 		} else {
 			return false;

@@ -20,17 +20,15 @@ public class Hunt{
 	private java.util.Random rndGenerator = new java.util.Random();
 	private int deer;
 	private int ducks;
-	private int bullets = 500;
 	private int random1;
 	private int random2;
 	private int random3;
 	private int random4;
 	private int random5;
+	private int bullets = 0;
 	private int countdown = 1000;			//one second timer
-	private JTextField digitTextField;
 	private JButton buttonDeer;
 	private JButton buttonDuck;
-	private ImageIcon[] digitIcon;
 	private int counter = 0;
 	private String[] digitString = {"TEN", "NINE", "EIGHT", "SEVEN", "SIX", "FIVE", "FOUR", "THREE", "TWO", "ONE", "ZERO", "FIFTEEN", "FOURTEEN", "THIRTEEN", "TWELVE", "ELEVEN"};
 	private Timer timer;
@@ -43,55 +41,20 @@ public class Hunt{
 	 */
 	
 	public Hunt(){
-		
-		if (bullets <=0){
-			frmOregonTrail.dispose();
-		}
-		
 		initialize();
-		timer = new Timer(countdown, closeHunt);
-		
-		timer.start();
-		frmOregonTrail.setVisible(true);
-		System.out.println(deer + ducks);
-		
-		
-		
-		timer.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(counter >= 10) {
-					frmOregonTrail.dispose();
-				}
-				counter = (counter + 1) % 11;
-				digitLabel.setText(digitString[counter]);
-				
-				
-				//buttonDuck.setBounds(48, 43, 85, 21);
-				//buttonDeer.setBounds(295, 168, 85, 21);
-				
-				timer = new Timer(countdown, closeHunt);
-			}
-		});
-	
 	}
 	
 	public void clockActionPerformed(ActionEvent evt) {
-		   counter = (counter + 1) % 10;
-			   digitLabel.setText(digitString[counter]);
-			   random5 = rndGenerator.nextInt(15);
-			   random1 = random5+random1;
-			   buttonDuck.setBounds(random1, random2, 101, 51);
-			   
-			   random5 = rndGenerator.nextInt(15);
-			   random3 = random5+random3;
-			   buttonDeer.setBounds(random3, random4+170, 101, 51);
-			   
-			   
-			   
-			   
-			   
-			   
-			  }
+	   counter = (counter + 1) % 10;
+	   digitLabel.setText(digitString[counter]);
+	   random5 = rndGenerator.nextInt(15);
+	   random1 = random5+random1;
+	   buttonDuck.setBounds(random1, random2, 101, 51);
+	   
+	   random5 = rndGenerator.nextInt(15);
+	   random3 = random5+random3;
+	   buttonDeer.setBounds(random3, random4+170, 101, 51);
+	}
 	
 	
 	
@@ -175,6 +138,39 @@ public class Hunt{
 	});
 	
 	
+	}
+	
+	public int startGame(int ammo) {
+		bullets = ammo;
+		if (bullets <=0){
+			frmOregonTrail.dispose();
+		}
+		
+		timer = new Timer(countdown, closeHunt);
+		
+		timer.start();
+		frmOregonTrail.setVisible(true);
+		System.out.println(deer + ducks);
+		
+		
+		
+		timer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(counter >= 10) {
+					frmOregonTrail.dispose();
+				}
+				counter = (counter + 1) % 11;
+				digitLabel.setText(digitString[counter]);
+				
+				
+				//buttonDuck.setBounds(48, 43, 85, 21);
+				//buttonDeer.setBounds(295, 168, 85, 21);
+				
+				timer = new Timer(countdown, closeHunt);
+			}
+		});
+		
+		return deer + ducks;
 	}
 }
 
