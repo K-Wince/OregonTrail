@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
 
 import World.Hunt;
@@ -22,7 +21,6 @@ import java.awt.Image;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -32,13 +30,9 @@ import java.awt.event.FocusEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JTextPane;
-import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
 
 public class MainWindow {
 	// GUI Variables
@@ -46,7 +40,7 @@ public class MainWindow {
 	private JPanel titleScreen;
 	private JPanel creditsScreen;
 	private JPanel wagonShopScreen;
-	private JTextField textCredit;
+	private JTextArea textCredit;
 	private JTextArea textStory;
 	private JFormattedTextField txtFood;
 	private JFormattedTextField txtClothing;
@@ -80,7 +74,6 @@ public class MainWindow {
 	
 	// Game Variables
 	private Supplies supply = new Supplies();
-	private Hunt hunt = new Hunt();
 	private int day = 1;
 	private int milesLeft = 102;
 	private int milesTraveled = 0;
@@ -192,6 +185,7 @@ public class MainWindow {
 		btnCredits.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// When the user presses the credits button then go to credits screen
+				
 				card.next(frame.getContentPane());
 			}
 		});
@@ -209,8 +203,12 @@ public class MainWindow {
 		frame.getContentPane().add(creditsScreen, "credits");
 		creditsScreen.setLayout(null);
 		
-		textCredit = new JTextField();
-		textCredit.setText("Placeholder Text for Credits");
+		textCredit = new JTextArea();
+		textCredit.setText("All wagon pictures comes from HiClipArt\r\n"
+				+ "The shop attendant picture comes from HiClipArt\r\n"
+				+ "\r\n"
+				+ "Title Screen Image by Dana Davis on Unsplash:\r\n"
+				+ "https://unsplash.com/photos/tRkhsmnl3bo");
 		textCredit.setBackground(Color.WHITE);
 		textCredit.setEditable(false);
 		textCredit.setBounds(10, 57, 637, 261);
@@ -289,13 +287,12 @@ public class MainWindow {
 		mask.setMaximum(999);
 		mask.setAllowsInvalid(false);
 		mask.setCommitsOnValidEdit(true);
-	   
+		// Update the total when the user loses focus
 		txtFood = new JFormattedTextField(mask);
 		txtFood.setText("0");
 		txtFood.addFocusListener(new FocusAdapter() {
 		@Override
 			public void focusLost(FocusEvent e) {
-				// Update the total when the user loses focus
 				getTotal();
 			}
 		});
@@ -386,6 +383,7 @@ public class MainWindow {
 		txtMedBox.setHorizontalAlignment(SwingConstants.CENTER);
 		txtMedBox.setBounds(500, 250, 43, 20);
 		shopScreen.add(txtMedBox);
+		// END: Of user losing focus
 	
 		moneyFood = new JLabel("x $");
 		moneyFood.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -515,9 +513,9 @@ public class MainWindow {
 					infoNotEnoughFunds.setText(null);
 					// Add the supplies
 					supply.addFood(Integer.parseInt(txtFood.getText().replaceAll(" ", "")) * 5);
-					supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")));
+					supply.addAmmo(Integer.parseInt(txtAmmo.getText().replaceAll(" ", "")) * 20);
 					supply.addClothing(Integer.parseInt(txtClothing.getText().replaceAll(" ", "")));
-					supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")));
+					supply.addOxen(Integer.parseInt(txtOxen.getText().replaceAll(" ", "")) * 2);
 					supply.addWheel(Integer.parseInt(txtWheel.getText().replaceAll(" ", "")));
 					supply.addAxle(Integer.parseInt(txtAxle.getText().replaceAll(" ", "")));
 					supply.addTongue(Integer.parseInt(txtTongue.getText().replaceAll(" ", "")));
@@ -536,6 +534,23 @@ public class MainWindow {
 		btnBuy.setBounds(553, 290, 89, 58);
 		shopScreen.add(btnBuy);
 		
+		JLabel lblShopKeep = new JLabel("");
+		Image keepImg = new ImageIcon(MainWindow.class.getResource("/pictures/shopKeep.png")).getImage().getScaledInstance(221, 314, Image.SCALE_SMOOTH);
+		lblShopKeep.setIcon(new ImageIcon(keepImg));
+		lblShopKeep.setBounds(10, 64, 221, 314);
+		shopScreen.add(lblShopKeep);
+		
+		JLabel lblInfo = new JLabel("\"Hover over our items for more");
+		lblInfo.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblInfo.setBounds(127, 80, 150, 14);
+		shopScreen.add(lblInfo);
+		
+		JLabel lblInformationAboutThem = new JLabel("information about them!\"");
+		lblInformationAboutThem.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblInformationAboutThem.setBounds(169, 98, 150, 14);
+		shopScreen.add(lblInformationAboutThem);
+		
+		// Wagon Shop Screen
 		wagonShopScreen = new JPanel();
 		frame.getContentPane().add(wagonShopScreen, "wagonShop");
 		wagonShopScreen.setLayout(null);
@@ -627,6 +642,7 @@ public class MainWindow {
 		wagonShopScreen.add(btnWagonBuy);
 		btnWagonBuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Check to see which radio button is selected and buy accordingly
 				if(btnCovWag.isSelected()) {
 					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/coveredWagon.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
 					supply.spendMoney(100);
@@ -637,9 +653,11 @@ public class MainWindow {
 					wagonImage = new ImageIcon(MainWindow.class.getResource("/pictures/fancyCarriage.png")).getImage().getScaledInstance(65, 55, Image.SCALE_SMOOTH);
 					supply.spendMoney(400);
 				}
-		
+				
+				// Set the main image as the wagon
 				lblWagon.setIcon(new ImageIcon(wagonImage));
-		
+				
+				// Update the next screen and then show the Shop Screen
 				moneyLeft.setText("$" + supply.getMoney());
 				setDollarAmount();
 				lblShop.setText(landMarks[location] + " Shop");
@@ -653,6 +671,7 @@ public class MainWindow {
 		lblMoneyInfo.setBounds(109, 311, 157, 19);
 		wagonShopScreen.add(lblMoneyInfo);
 		
+		// Main Screen Panel
 		JPanel mainScreen = new JPanel();
 		frame.getContentPane().add(mainScreen, "mainScreen");
 		mainScreen.setLayout(null);
@@ -688,6 +707,7 @@ public class MainWindow {
 		btnNext = new JButton("Next Day");
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Perform Next Day Functions
 				nextDay(supply);
 				updateStats();
 				checkLocation();
@@ -699,6 +719,7 @@ public class MainWindow {
 		btnShop = new JButton("Shop");
 		btnShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Go to the shop
 				card.show(frame.getContentPane(), "shop");
 			}
 		});
@@ -709,6 +730,7 @@ public class MainWindow {
 		JButton btnSupplies = new JButton("Supplies");
 		btnSupplies.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// Print the supplies the users have
 				printSupplies();
 			}
 		});
@@ -827,15 +849,26 @@ public class MainWindow {
 		btnHunt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Start the Hunt Menu if the Button is pressed
-				int totalKilled = hunt.startGame(supply.getAmmo());
-				supply.consumeAmmo(totalKilled);
-				supply.addFood(totalKilled * 5);
+				int tempBullet = supply.getAmmo();
+				int tempFood = supply.getFood();
+				Hunt hunt = new Hunt(supply);
+				mainText.append("You were able to get "
+						+ (supply.getFood() - tempFood)
+						+ " pounds of food and consumed "
+						+ (tempBullet - supply.getAmmo())
+						+ " bullets while hunting.\n"
+						);
+				updateStats();
 			}
 		});
 		btnHunt.setBounds(533, 320, 89, 23);
 		mainScreen.add(btnHunt);
 	}
 	
+	/**
+	 * getTotal Method - returns the total of all the items the user is buying
+	 * @return integer - the total of the items
+	 */
 	public int getTotal() {
 		int total = (Integer.parseInt(txtFood.getText().replaceAll(" ", ""))  * foodCost * rate)
 			+ (Integer.parseInt(txtClothing.getText().replaceAll(" ", ""))  * clothingCost * rate)
@@ -849,6 +882,9 @@ public class MainWindow {
 		return total;
 	}
 	
+	/**
+	 * setDollarAmount Method - sets the dollar amount of the items in the shop 
+	 */
 	public void setDollarAmount () {
 		moneyFood.setText("X $" + (foodCost * rate));
 		moneyClothing.setText("X $" + (clothingCost * rate));
@@ -860,6 +896,10 @@ public class MainWindow {
 		moneyMedBox.setText("X $" + (medCost * rate));
 	}
 	
+	/**
+	 * nextDay Method - increases the day by one and performs necessary functions
+	 * @param supplies - the supplies of the user
+	 */
 	public void nextDay(Supplies supplies) {
 		day++;                    // Increase the Day count
 		supply.eatFood(portion);
@@ -908,7 +948,7 @@ public class MainWindow {
 			"The supplies you have are: " +
 			supply.getFood() + " lbs of food, " +
 			supply.getClothing() + " sets of clothing, " +
-			supply.getAmmo() + " boxes of bullets, " +
+			supply.getAmmo() + " bullets, " +
 			supply.getOxen() + " oxen, " +
 			supply.getWheel() + " wheels, " +
 			supply.getAxle() + " axles, " +
@@ -917,6 +957,10 @@ public class MainWindow {
 				);
 	}
 	
+	/**
+	 * checkLocation Method - checks the location of the user and performs certains actions
+	 * based on where the user is currently located
+	 */
 	public void checkLocation() {
 		if(btnShop.isEnabled()) {
 			btnShop.setEnabled(false);
@@ -953,6 +997,9 @@ public class MainWindow {
 		checkLoss(); //checks for a loss
 	}
 	
+	/**
+	 * updateStats Method - update the in-game stats of the user
+	 */
 	public void updateStats() {
 	// If they have no food then increase the day counter
 	if (supply.getFood() == 0) {
@@ -977,7 +1024,9 @@ public class MainWindow {
 	lblWagon.setLocation(592 - (int)(592.0 * ((double)milesTraveled/distance[location])),29);
 	}
 	
-	
+	/**
+	 * checkLoss Method - checks to see if they have lost the game
+	 */
 	public void checkLoss() {
 		// If they reach 0 on any of these items then end the game
 		if(people == 0 || dayWithoutFood == 3 || supply.getOxen() == 0) {
@@ -989,6 +1038,10 @@ public class MainWindow {
 		}
 	}
 	
+	/**
+	 * checkInjury Method - checks the injury of the person that it is called on
+	 * @param p - person
+	 */
 	public void checkInjury(Person p) {
 		if(p.checkDeath()){
 			mainText.append(p.getName() + " has died");
