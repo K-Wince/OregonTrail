@@ -1,0 +1,2 @@
+# OregonTrail
+This is a game based on the original Oregon Trail game developed for the Apple II. This game takes a spin where it focuses the story on a woman's point of view throughout the game. You will be playing as Hattie Campbell; a young girl who has set off on the oregon trail from Independence, Missouri with her family to reach Oregon. This game was developed as a group project for an undergraduate class with the Java programming language.
